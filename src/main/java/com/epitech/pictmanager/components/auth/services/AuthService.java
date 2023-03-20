@@ -2,8 +2,8 @@ package com.epitech.pictmanager.components.auth.services;
 
 import com.epitech.pictmanager.components.auth.config.jwt.JwtTokenProvider;
 import com.epitech.pictmanager.components.auth.dto.RegisterDto;
-import com.epitech.pictmanager.components.auth.repositories.ProfileJpaRepository;
-import com.epitech.pictmanager.components.auth.repositories.UserJpaRepository;
+import com.epitech.pictmanager.components.user.repositories.ProfileJpaRepository;
+import com.epitech.pictmanager.components.user.repositories.UserJpaRepository;
 import com.epitech.pictmanager.components.auth.responses.AuthResponse;
 import com.epitech.pictmanager.models.Profile;
 import com.epitech.pictmanager.models.User;
@@ -32,7 +32,7 @@ public class AuthService {
         this.profileRepository = profileRepository;
         this.jwtTokenProvider = jwtTokenProvider;
     }
-    
+
     public ResponseEntity<AuthResponse> register(RegisterDto registerDto) {
         try {
             if(this.userRepository.existsUserByUsername(registerDto.getUsername()))

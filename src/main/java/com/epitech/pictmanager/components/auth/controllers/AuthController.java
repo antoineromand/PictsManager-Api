@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController()
-@RequestMapping("private/api/auth")
+@RequestMapping("public/api/auth")
 public class AuthController {
     @Autowired
     AuthService authService;

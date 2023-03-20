@@ -1,5 +1,7 @@
 package com.epitech.pictmanager.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,6 +19,7 @@ public class Profile {
     private String coverPicture;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     public Profile() {

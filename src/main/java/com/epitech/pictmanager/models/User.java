@@ -1,5 +1,7 @@
 package com.epitech.pictmanager.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
@@ -28,6 +30,7 @@ public class User {
     private Boolean isPublic;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Profile profile;
 
     public User() {
