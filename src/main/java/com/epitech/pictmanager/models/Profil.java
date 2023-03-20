@@ -3,11 +3,10 @@ package com.epitech.pictmanager.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity()
 @Table(name = "user_profil")
-public class Profile {
+public class Profil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,11 +21,11 @@ public class Profile {
     @JsonBackReference
     private User user;
 
-    public Profile() {
+    public Profil() {
         super();
     }
 
-    public Profile(String description, String profilePicture, String coverPicture) {
+    public Profil(String description, String profilePicture, String coverPicture) {
         this.description = description;
         this.profilePicture = profilePicture;
         this.coverPicture = coverPicture;

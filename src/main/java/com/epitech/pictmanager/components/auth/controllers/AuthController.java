@@ -2,8 +2,8 @@ package com.epitech.pictmanager.components.auth.controllers;
 
 import com.epitech.pictmanager.components.auth.dto.LoginDto;
 import com.epitech.pictmanager.components.auth.dto.RegisterDto;
-import com.epitech.pictmanager.components.auth.responses.AuthResponse;
 import com.epitech.pictmanager.components.auth.services.AuthService;
+import com.epitech.pictmanager.responses.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +22,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody() RegisterDto registerDto) {
+    public ResponseEntity<GenericResponse> register(@RequestBody() RegisterDto registerDto) {
         return this.authService.register(registerDto);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody() LoginDto loginDto, HttpServletResponse response) {
+    public ResponseEntity<GenericResponse> login(@RequestBody() LoginDto loginDto, HttpServletResponse response) {
         return this.authService.login(loginDto.getUsername(), loginDto.getPassword(), response);
     }
 }
