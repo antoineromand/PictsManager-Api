@@ -31,7 +31,7 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private Profile profile;
+    private Profil profile;
 
     public User() {
         super();
@@ -94,11 +94,11 @@ public class User {
         isPublic = aPublic;
     }
 
-    public Profile getProfile() {
+    public Profil getProfile() {
         return profile;
     }
 
-    public void setProfile(Profile profile) {
+    public void setProfile(Profil profile) {
         this.profile = profile;
     }
 

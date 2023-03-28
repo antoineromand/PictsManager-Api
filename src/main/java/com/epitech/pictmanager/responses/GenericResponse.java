@@ -1,10 +1,10 @@
-package com.epitech.pictmanager.components.auth.responses;
+package com.epitech.pictmanager.responses;
 
-public class AuthResponse {
+public class GenericResponse {
     private String message;
     private int httpCode;
 
-    public AuthResponse(String message, int httpCode) {
+    public GenericResponse(String message, int httpCode) {
         this.message = message;
         this.httpCode = httpCode;
     }
