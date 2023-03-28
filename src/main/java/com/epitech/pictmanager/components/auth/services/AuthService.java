@@ -8,6 +8,7 @@ import com.epitech.pictmanager.models.Profil;
 import com.epitech.pictmanager.models.User;
 import com.epitech.pictmanager.responses.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -69,12 +70,16 @@ public class AuthService {
                 throw new Error("Wrong password");
             String token = jwtTokenProvider.createToken(username);
 
-            Cookie jwtCookie = new Cookie("jwt", token);
+            /**Cookie jwtCookie = new Cookie("jwt", token);
             jwtCookie.setHttpOnly(true); // This makes the cookie inaccessible to JavaScript
             jwtCookie.setMaxAge((int) (jwtTokenProvider.getExpiration() / 1000));
             jwtCookie.setPath("/");
-            response.addCookie(jwtCookie);
-            return new ResponseEntity<GenericResponse>(new GenericResponse("User logged in successfully", HttpStatus.OK.value()), HttpStatus.OK);
+            response.addCookie(jwtCookie);**/
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Authorization", "Bearer " + token);
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(new GenericResponse("User logged in successfully", HttpStatus.OK.value()));
         } catch (Error e) {
             return new ResponseEntity<GenericResponse>(new GenericResponse(e.getMessage(), HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
         }
