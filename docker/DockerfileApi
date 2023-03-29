@@ -1,9 +1,7 @@
-ROM maven:3.8.6-openjdk-11
+FROM maven:3.8.6-openjdk-11
 WORKDIR /api
-COPY ./api .
+COPY . .
 RUN mvn clean install
 EXPOSE 4000
-ENV API_ENV_FILE /data/.env-api
-COPY ./docker/scripts/wait-for-db.sh /wait-for-db.sh
-RUN chmod +x /wait-for-db.sh
-CMD ["/wait-for-db.sh", "db", "3306", "mvn", "spring-boot:run"]
+ENV API_ENV_FILE ../.env
+CMD ["mvn", "spring-boot:run"]
