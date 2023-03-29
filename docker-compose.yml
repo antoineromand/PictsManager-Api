@@ -23,9 +23,11 @@ services:
     ports:
       - 8081:80
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   api:
+    container_name: api
     build:
       context: .
       dockerfile: docker/DockerfileApi
