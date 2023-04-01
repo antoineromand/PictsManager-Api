@@ -62,7 +62,7 @@ public class AuthService {
                 throw new Error("User not found");
             if (!passwordEncryptionService.check(password, user.getPassword()))
                 throw new Error("Wrong password");
-            String token = jwtTokenProvider.createToken(username);
+            String token = jwtTokenProvider.createToken(user.getId());
 
             HttpHeaders headers = new HttpHeaders();
             headers.add("Authorization", "Bearer " + token);
