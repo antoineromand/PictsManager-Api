@@ -1,11 +1,18 @@
 package com.epitech.pictmanager.components.auth.dto;
 
+import com.epitech.pictmanager.models.Profil;
+import com.epitech.pictmanager.models.User;
+import lombok.Builder;
+import lombok.Data;
+
 import java.util.Date;
 import javax.validation.Validation.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
-
+@Builder
+@Data
 public class RegisterDto {
     @NotBlank
     @Size(min = 3, max = 50)
@@ -20,19 +27,30 @@ public class RegisterDto {
     @Email
     private String email;
     private String dateOfBirth;
-    private boolean isBanned;
-    private boolean isPublic;
+    private boolean isBanned = false;
+    private boolean isPublic = true;
     private String description;
     private String profilePicture;
     private String coverPicture;
 
-    public RegisterDto(String username, String password, String email, String dateOfBirth, boolean isBanned, boolean isPublic) {
-        this.username = username;
-        this.password = password;
-        this.dateOfBirth = dateOfBirth;
-        this.email = email;
-        this.isBanned = isBanned;
-        this.isPublic = isPublic;
+    public static User toUser(RegisterDto registerDto) {
+        User user = new User();
+        user.setUsername(registerDto.getUsername());
+        user.setPassword(registerDto.getPassword());
+        user.setEmail(registerDto.getEmail());
+        user.setDateOfBirth(new Date(registerDto.getDateOfBirth()));
+        user.setBanned(false);
+        user.setPublic(true);
+        return user;
+    }
+
+    public static Profil toProfil(RegisterDto registerDto, User user) {
+        Profil profil = new Profil();
+        profil.setDescription(registerDto.getDescription());
+        profil.setProfilePicture(registerDto.getProfilePicture());
+        profil.setCoverPicture(registerDto.getCoverPicture());
+        profil.setUser(user);
+        return profil;
     }
 
     public String getUsername() {

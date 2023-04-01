@@ -3,6 +3,7 @@ package com.epitech.pictmanager.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 
 @Entity()
 @Table(name = "user_profil")
@@ -10,11 +11,14 @@ public class Profil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = true)
+    @Null
     private String description;
-    @Column(nullable = false)
+    @Column(nullable = true)
+    @Null
     private String profilePicture;
-    @Column(nullable = false)
+    @Column(nullable = true)
+    @Null
     private String coverPicture;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
