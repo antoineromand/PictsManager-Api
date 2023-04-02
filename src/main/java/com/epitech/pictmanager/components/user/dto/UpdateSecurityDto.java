@@ -5,8 +5,7 @@ public class UpdateSecurityDto {
     private String username;
     private String email;
     private String password;
-    private String newPassword;
-    private Boolean isPublic;
+    private String visibility;
 
     public String getUsername() {
         return username;
@@ -20,11 +19,8 @@ public class UpdateSecurityDto {
         return password;
     }
 
-    public String getNewPassword() {
-        return newPassword;
-    }
 
-    public Boolean getPublic() {
-        return isPublic;
+    public String getVisibility() {
+        return visibility;
     }
 }
