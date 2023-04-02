@@ -2,15 +2,20 @@ package com.epitech.pictmanager.components.user.services;
 
 import com.epitech.pictmanager.components.auth.services.PasswordEncryptionService;
 import com.epitech.pictmanager.components.user.dto.UpdateProfilDto;
+import com.epitech.pictmanager.components.user.dto.UpdateSecurityDto;
 import com.epitech.pictmanager.components.user.repositories.ProfilJpaRepository;
 import com.epitech.pictmanager.components.user.repositories.UserJpaRepository;
 import com.epitech.pictmanager.models.Profil;
 import com.epitech.pictmanager.models.User;
 import com.epitech.pictmanager.responses.GenericResponse;
+import com.epitech.pictmanager.responses.GenericUpdateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -25,12 +30,15 @@ public class UserService {
         this.passwordEncryptionService = passwordEncryptionService;
     }
 
-    public ResponseEntity<GenericResponse> deleteUserAndProfil(String username) {
+    public ResponseEntity<GenericResponse> deleteUserAndProfil(String id) {
         try {
-            User user = this.userRepository.findUserByUsername(username);
-            Profil profile = this.profileRepository.findProfileByUser(user.getId());
+            User user = this.userRepository.findUserById(Long.parseLong(id));
             if (user == null) {
                 throw new RuntimeException("User not found");
+            }
+            Profil profile = this.profileRepository.findProfileByUser(user);
+            if(profile == null) {
+                throw new RuntimeException("Profile not found");
             }
             this.profileRepository.delete(profile);
             this.userRepository.delete(user);
@@ -40,54 +48,86 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<GenericResponse> updateUserPassword(String username, String password) {
+    public ResponseEntity<GenericUpdateResponse> updateUserProfil(String id, UpdateProfilDto updateProfilDto) {
         try {
-            User user = this.userRepository.findUserByUsername(username);
+            User user = this.userRepository.findUserById(Long.parseLong(id));
             if (user == null) {
                 throw new RuntimeException("User not found");
             }
-            user.setPassword(passwordEncryptionService.encrypt(password));
-            this.userRepository.save(user);
-            return new ResponseEntity<GenericResponse>(new GenericResponse("Password updated successfully", HttpStatus.ACCEPTED.value()), HttpStatus.ACCEPTED);
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    public ResponseEntity<GenericResponse> updateUserEmail(String username, String email) {
-        try {
-            User user = this.userRepository.findUserByUsername(username);
-            if (user == null) {
-                throw new RuntimeException("User not found");
-            }
-            user.setEmail(email);
-            this.userRepository.save(user);
-            return new ResponseEntity<GenericResponse>(new GenericResponse("Email updated successfully", HttpStatus.ACCEPTED.value()), HttpStatus.ACCEPTED);
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    public ResponseEntity<GenericResponse> updateUserProfil(String username, UpdateProfilDto updateProfilDto) {
-        try {
-            User user = this.userRepository.findUserByUsername(username);
-            if (user == null) {
-                throw new RuntimeException("User not found");
-            }
-            Profil profil = this.profileRepository.findProfileByUser(user.getId());
+            Profil profil = this.profileRepository.findProfileByUser(user);
             if (profil == null) {
                 throw new RuntimeException("Profile not found");
             }
-            profil.setDescription(updateProfilDto.getDescription());
-            profil.setProfilePicture(updateProfilDto.getProfilePicture());
-            profil.setCoverPicture(updateProfilDto.getCoverPicture());
+            List<String> updatedFields = new ArrayList<>();
+            boolean hasChanged = false;
+            if (updateProfilDto.getDescription() != null && !updateProfilDto.getDescription().equals(profil.getDescription())) {
+                profil.setDescription(updateProfilDto.getDescription());
+                updatedFields.add("description");
+                hasChanged = true;
+            }
+            if (updateProfilDto.getProfilePicture() != null && !updateProfilDto.getProfilePicture().equals(profil.getProfilePicture())) {
+                profil.setProfilePicture(updateProfilDto.getProfilePicture());
+                updatedFields.add("profilePicture");
+                hasChanged = true;
+            }
+            if (updateProfilDto.getCoverPicture() != null && !updateProfilDto.getCoverPicture().equals(profil.getCoverPicture())) {
+                profil.setCoverPicture(updateProfilDto.getCoverPicture());
+                updatedFields.add("coverPicture");
+                hasChanged = true;
+            }
+            if (!hasChanged) {
+                return new ResponseEntity<GenericUpdateResponse>(new GenericUpdateResponse("No changes detected, profile not updated", HttpStatus.NOT_MODIFIED.value(), updatedFields), HttpStatus.NOT_MODIFIED);
+            }
             this.profileRepository.save(profil);
-            return new ResponseEntity<GenericResponse>(new GenericResponse("Profile updated successfully", HttpStatus.ACCEPTED.value()), HttpStatus.ACCEPTED);
+            return new ResponseEntity<GenericUpdateResponse>(new GenericUpdateResponse("Profile updated successfully", HttpStatus.ACCEPTED.value(), updatedFields), HttpStatus.ACCEPTED);
         } catch (RuntimeException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-
+    public ResponseEntity<GenericUpdateResponse> updateUserSecurity(String id, UpdateSecurityDto updateSecurityDto) {
+        try {
+            User user = this.userRepository.findUserById(Long.parseLong(id));
+            boolean isPublic = updateSecurityDto.getVisibility() == "true" ? true : false;
+            if (user == null) {
+                throw new RuntimeException("User not found");
+            }
+            boolean hasChanged = false;
+            List<String> updatedFields = new ArrayList<>();
+            if (!user.getUsername().equals(updateSecurityDto.getUsername())) {
+                if(this.userRepository.existsUserByUsername(updateSecurityDto.getUsername())) {
+                    throw new RuntimeException("Username already taken");
+                }
+                user.setUsername(updateSecurityDto.getUsername());
+                updatedFields.add("username");
+                hasChanged = true;
+            }
+            if (!user.getEmail().equals(updateSecurityDto.getEmail())) {
+                if(this.userRepository.existsUserByEmail(updateSecurityDto.getEmail())) {
+                    throw new RuntimeException("Email already taken");
+                }
+                user.setEmail(updateSecurityDto.getEmail());
+                updatedFields.add("email");
+                hasChanged = true;
+            }
+            if (!user.getPublic().equals(isPublic)) {
+                user.setPublic(isPublic);
+                updatedFields.add("isPublic");
+                hasChanged = true;
+            }
+            if(!passwordEncryptionService.check(updateSecurityDto.getPassword(), user.getPassword())) {
+                user.setPassword(passwordEncryptionService.encrypt(updateSecurityDto.getPassword()));
+                updatedFields.add("password");
+                hasChanged = true;
+            }
+            if(!hasChanged) {
+                return new ResponseEntity<GenericUpdateResponse>(new GenericUpdateResponse("No changes detected, profile not updated", HttpStatus.NOT_MODIFIED.value(), updatedFields), HttpStatus.NOT_MODIFIED);
+            }
+            this.userRepository.save(user);
+            return new ResponseEntity<GenericUpdateResponse>(new GenericUpdateResponse("Profile updated successfully", HttpStatus.ACCEPTED.value(), updatedFields), HttpStatus.ACCEPTED);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 
 }
