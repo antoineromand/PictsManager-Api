@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"com.epitech.pictmanager","l":"DatabaseConfig"},{"p":"com.epitech.pictmanager","l":"DatabaseTest"},{"p":"com.epitech.pictmanager","l":"PictmanagerApplication"},{"p":"com.epitech.pictmanager.auth","l":"TestController"}]
