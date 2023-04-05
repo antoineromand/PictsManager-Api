@@ -18,7 +18,7 @@ public class AuthController {
 
     @GetMapping()
     public String index() {
-        return "Auth controller is working ...";
+        return System.getProperty("user.home");
     }
 
     @PostMapping("/register")

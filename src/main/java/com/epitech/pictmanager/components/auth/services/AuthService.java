@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.Date;
 
 @Service
@@ -44,6 +45,10 @@ public class AuthService {
 
             User user = RegisterDto.toUser(registerDto);
             user.setPassword(passwordEncryptionService.encrypt(user.getPassword()));
+            boolean folderExist = createFolders(user.getUsername());
+            if (!folderExist) {
+                throw new Error("Error while creating user folder, it's seems that there is a problem with your username");
+            }
             this.userRepository.save(user);
 
             Profil profil = RegisterDto.toProfil(registerDto, user);
@@ -53,6 +58,20 @@ public class AuthService {
             System.out.println("Erreur de contrainte : " + e.getMostSpecificCause());
             return new ResponseEntity<GenericResponse>(new GenericResponse(e.getMessage(), HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    public boolean createFolders(String username) {
+        File file = new File(System.getProperty("user.home") + "/images-manager");
+        if (!file.exists())  file.mkdir();
+        File userFolder = new File(System.getProperty("user.home") + "/images-manager/" + username);
+        if (!userFolder.exists()) {
+            if (userFolder.mkdir()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
     public ResponseEntity<GenericResponse> login(String username, String password, HttpServletResponse response) {
