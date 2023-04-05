@@ -46,9 +46,9 @@ public class RegisterDto {
 
     public static Profil toProfil(RegisterDto registerDto, User user) {
         Profil profil = new Profil();
-        profil.setDescription(registerDto.getDescription());
-        profil.setProfilePicture(registerDto.getProfilePicture());
-        profil.setCoverPicture(registerDto.getCoverPicture());
+        profil.setDescription(null);
+        profil.setProfilePicture(null);
+        profil.setCoverPicture(null);
         profil.setUser(user);
         return profil;
     }
