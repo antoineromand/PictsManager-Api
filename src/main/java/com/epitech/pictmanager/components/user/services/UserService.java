@@ -94,7 +94,7 @@ public class UserService {
             }
             boolean hasChanged = false;
             List<String> updatedFields = new ArrayList<>();
-            if (!user.getUsername().equals(updateSecurityDto.getUsername())) {
+            if (updateSecurityDto.getUsername() != null && !user.getUsername().equals(updateSecurityDto.getUsername())) {
                 if(this.userRepository.existsUserByUsername(updateSecurityDto.getUsername())) {
                     throw new RuntimeException("Username already taken");
                 }
@@ -102,7 +102,7 @@ public class UserService {
                 updatedFields.add("username");
                 hasChanged = true;
             }
-            if (!user.getEmail().equals(updateSecurityDto.getEmail())) {
+            if (updateSecurityDto.getEmail() != null && !user.getEmail().equals(updateSecurityDto.getEmail())) {
                 if(this.userRepository.existsUserByEmail(updateSecurityDto.getEmail())) {
                     throw new RuntimeException("Email already taken");
                 }
@@ -110,12 +110,12 @@ public class UserService {
                 updatedFields.add("email");
                 hasChanged = true;
             }
-            if (!user.getPublic().equals(updateSecurityDto.getVisibility())) {
+            if (updateSecurityDto.getVisibility() != null && !user.getPublic().equals(updateSecurityDto.getVisibility())) {
                 user.setPublic(updateSecurityDto.getVisibility());
                 updatedFields.add("isPublic");
                 hasChanged = true;
             }
-            if(!passwordEncryptionService.check(updateSecurityDto.getPassword(), user.getPassword())) {
+            if(updateSecurityDto.getPassword() != null && !passwordEncryptionService.check(updateSecurityDto.getPassword(), user.getPassword())) {
                 user.setPassword(passwordEncryptionService.encrypt(updateSecurityDto.getPassword()));
                 updatedFields.add("password");
                 hasChanged = true;

@@ -1,9 +1,12 @@
 package com.epitech.pictmanager.components.user.dto;
 
 
+import javax.validation.constraints.Null;
+
 public class UpdateSecurityDto {
     private String username;
     private String email;
+    @Null
     private String password;
     private Boolean visibility;
 
