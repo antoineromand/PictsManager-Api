@@ -88,7 +88,7 @@ public class UserService {
     public ResponseEntity<GenericUpdateResponse> updateUserSecurity(String id, UpdateSecurityDto updateSecurityDto) {
         try {
             User user = this.userRepository.findUserById(Long.parseLong(id));
-            boolean isPublic = updateSecurityDto.getVisibility() == "true" ? true : false;
+            System.out.println(updateSecurityDto.getVisibility());
             if (user == null) {
                 throw new RuntimeException("User not found");
             }
@@ -110,8 +110,8 @@ public class UserService {
                 updatedFields.add("email");
                 hasChanged = true;
             }
-            if (!user.getPublic().equals(isPublic)) {
-                user.setPublic(isPublic);
+            if (!user.getPublic().equals(updateSecurityDto.getVisibility())) {
+                user.setPublic(updateSecurityDto.getVisibility());
                 updatedFields.add("isPublic");
                 hasChanged = true;
             }
