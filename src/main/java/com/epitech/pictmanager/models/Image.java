@@ -1,5 +1,7 @@
 package com.epitech.pictmanager.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -24,6 +26,7 @@ public class Image {
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
+    @JsonBackReference
     private User user;
 
     public void setId(Long id) {
