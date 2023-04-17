@@ -30,12 +30,14 @@ public class UploadService {
                 throw new RuntimeException("User not found");
             }
             byte[] bytes = image.getBytes();
-            File userFolder = new File(System.getProperty("user.home") + "/images-manager/" + user.getId());
-
+            Path srcPath = Paths.get("src");
+            Path imageManagerPath = srcPath.resolveSibling("image_manager");
+            Path userFolderPath = imageManagerPath.resolve(user.getId().toString());
+            File userFolder = userFolderPath.toFile();
+            System.out.println(userFolder);
             if(!userFolder.exists()) {
                 userFolder.mkdir();
             }
-
             // Write the image to the folder
             Path path = Paths.get(userFolder.getPath(), image.getOriginalFilename());
             Files.write(path, bytes);
