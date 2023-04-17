@@ -1,6 +1,7 @@
 package com.epitech.pictmanager.components.user.services;
 
 import com.epitech.pictmanager.components.user.dto.UserSearchResponse;
+import com.epitech.pictmanager.components.user.dto.UserWithoutPasswordDto;
 import com.epitech.pictmanager.components.user.repositories.ProfilJpaRepository;
 import com.epitech.pictmanager.components.user.repositories.UserJpaRepository;
 import com.epitech.pictmanager.models.Profil;
@@ -33,6 +34,8 @@ public class UserPublicService {
         if (user == null) {
             return new ResponseEntity<Object>("No user found", HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(user);
+        UserWithoutPasswordDto userWithoutPasswordDto = new UserWithoutPasswordDto(user.getUsername(), user.getEmail(), user.getDateOfBirth(), user.getPublic(), user.getProfile(), user.getImage());
+
+        return ResponseEntity.ok(userWithoutPasswordDto);
     }
 }
