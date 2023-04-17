@@ -88,7 +88,6 @@ public class UserService {
     public ResponseEntity<GenericUpdateResponse> updateUserSecurity(String id, UpdateSecurityDto updateSecurityDto) {
         try {
             User user = this.userRepository.findUserById(Long.parseLong(id));
-            System.out.println(updateSecurityDto.getVisibility());
             if (user == null) {
                 throw new RuntimeException("User not found");
             }

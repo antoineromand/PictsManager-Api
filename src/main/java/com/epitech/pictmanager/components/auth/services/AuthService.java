@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.Date;
 
 @Service
@@ -45,13 +46,34 @@ public class AuthService {
             User user = RegisterDto.toUser(registerDto);
             user.setPassword(passwordEncryptionService.encrypt(user.getPassword()));
             this.userRepository.save(user);
-
             Profil profil = RegisterDto.toProfil(registerDto, user);
             this.profileRepository.save(profil);
+            boolean folderExist = createFolders(user.getId());
+            if (!folderExist) {
+                throw new Error("Error while creating user folder, it's seems that there is a problem with your username");
+            }
             return new ResponseEntity<GenericResponse>(new GenericResponse("User registered successfully", HttpStatus.CREATED.value()), HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e) {
             System.out.println("Erreur de contrainte : " + e.getMostSpecificCause());
             return new ResponseEntity<GenericResponse>(new GenericResponse(e.getMessage(), HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public boolean createFolders(Long id) {
+        try {
+            File file = new File(System.getProperty("user.home") + "/images-manager");
+            if (!file.exists())  file.mkdir();
+            File userFolder = new File(System.getProperty("user.home") + "/images-manager/" + id);
+            if (!userFolder.exists()) {
+                if (userFolder.mkdir()) {
+                    System.out.println(file.getPath());
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
         }
     }
 
