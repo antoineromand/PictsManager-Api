@@ -1,6 +1,7 @@
 package com.epitech.pictmanager.models;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity()
 @Table(name = "image")
@@ -10,13 +11,16 @@ public class Image {
     private Long id;
 
     @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String path;
 
     @Column(nullable = false)
-    private String date;
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
@@ -30,12 +34,12 @@ public class Image {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String name) {
+        this.description = name;
     }
 
     public String getPath() {
@@ -46,11 +50,11 @@ public class Image {
         this.path = path;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -60,5 +64,13 @@ public class Image {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
