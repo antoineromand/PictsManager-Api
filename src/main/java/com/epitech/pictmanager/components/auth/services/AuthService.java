@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 
 @Service
@@ -61,12 +63,12 @@ public class AuthService {
 
     public boolean createFolders(Long id) {
         try {
-            File file = new File(System.getProperty("user.home") + "/images-manager");
-            if (!file.exists())  file.mkdir();
-            File userFolder = new File(System.getProperty("user.home") + "/images-manager/" + id);
-            if (!userFolder.exists()) {
-                if (userFolder.mkdir()) {
-                    System.out.println(file.getPath());
+            Path imageManagerPath = Paths.get("/image_manager");
+            Path userFolderPath = imageManagerPath.resolve(id.toString());
+            File userFile = userFolderPath.toFile();
+            if (!userFile.exists()) {
+                if (userFile.mkdir()) {
+                    System.out.println(userFile.getPath());
                     return true;
                 }
             }

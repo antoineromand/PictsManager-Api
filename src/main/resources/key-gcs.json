@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "enduring-rush-384017",
+  "private_key_id": "d2fc3e49277a093bd0e9c331df3e8f570e928412",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDFBqLUKohnvcF5\ndDLIBx3RpMwViyiJ+gFnvtf6EFlul71zFViIlNkB5Df6vlSkqbxJlXIZw6KJIGAv\ntraV2ZYb2wL3iSX5EvuLt2tV1qiIbazjzEXb1Kd2xoe5rVDl0/zrGoCDEFoqh833\nWO0CRTPFYvsQ65A4G5iazkEg+Ko6bHWveVyVOJ9IElbyTNvdPINaizFTYyAYijCc\nDRa0B872gz3e+HFMlpcCfTC6Tm9ZUeVQB0Oo58Rt7yOBE7PminFk0E52xg/1mPwU\n7iJqXeybNBNauy4oGB8dxyPijAfFrWw10ZEDLBfIv11E+fuCdn85I34fZVbDMsiI\n1vH//L8VAgMBAAECggEAD1TVw228QVpX0LQhv95YS/gNzqVbL7Vnef1Oc02ylkAy\nt6uGQQaLUzIN+xiBbKWUNCOjBjpqqBuZVubAX+CKsjs0iJkm/jIKDSEZaWVAcwrm\nkUlT34HPA2Qtq11ygv45p/ySQHo7kfCqyDlzilT8bNRbCUHs7h8tNlEGnckYmF6C\nNKqj/zkX1mjKWzHWiYOP/IP8OrU7XrWtW9E/dOiL3+AJV44jm1VBULQo+eZWYTo0\ncYc3ac9GLEAXNpJvLxTQ4PLnL2ZtU8QCtSBrnPYFMOHrkmCmlVFe6M0RoQa8JPH+\nc3N+V+ZXGoVDvK441wlVzvZflrEDCaOvF04SA6qcpwKBgQDu3OxiZ4LjTMG2o+Im\nMOj1DHeEQ2eSoPAR5lcKK+tbsWhPIbbAQAjamaWBjUrtfnVperVTHpFPPboEwJ+g\n6ZSUrHdSJExxZNNP0stcsu6xOpcEFCB+Dr7N0OWj39KSC906+N+kicxbn6S/8FGZ\nVp8xDHwcfBXJ2EmAX+C0/0/IhwKBgQDTKU/3maNomyMgpVoP42PFKJg7/pXpJMLf\nhQCvqSB7a9K6/poEyZXFOf9+PSMO8Ooaq+C1Zkuiv2rI42EoB+DyPgDhLeyvKqzr\nzGSBhvDIclK7dWYOYSAzIxs3piOglOzSLxZ9LZ1J9GgYCPHRkKMNCpMae4m8FQHQ\nB324MHBOgwKBgQCp31P9Z8AeBqh9S2+52W7TV1poJcey7+HL2RRtl256d2DHZiKh\n9uhVDpA14lY3MIgvy6TIyCRvRmbUmmjr9zJDyaPSNx5mRl5BlpgqBNbcE97yd53k\nCHiJxtaKBNOsKePb3MKwMY+0WYTBPBfMBV6Rc1+Qom6cbcVYFten4SrMYQKBgG0t\nlhAiGvAyDkaJ1/gRDPvakmOqrR3/iNaC8Sjh3E6UID/Y9g91nv97jlNaDu9httkV\ndzizbHX4XKEDl69X64G0d0X2NcMX4JKGeozSFVq+aXJNL/hNVZW7GA580zzq40uF\nVy5f0Ex1lwCeV1GQZA2RIx/1MfDSN760sNb0DI07AoGBAJ7r0FxTujhB2iwNbRrS\n4btuXp8rjw1a82++Ca2kGst8Etv9mhN0WVWOY5KGY9RdfMUEPUKAsT5ZXh4Ic9wV\nMNXomSK6kan3H1RxttwViuA+0mZPwVZ0LB5/nABZjEdErQAdno0zG7S5UeVvngmz\n2v6AY6CS7qH8eJfNRnogT84Y\n-----END PRIVATE KEY-----\n",
+  "client_email": "pictsmanager-api-service@enduring-rush-384017.iam.gserviceaccount.com",
+  "client_id": "115411725986822258934",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/pictsmanager-api-service%40enduring-rush-384017.iam.gserviceaccount.com"
+}
