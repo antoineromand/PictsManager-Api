@@ -30,8 +30,7 @@ public class UploadService {
                 throw new RuntimeException("User not found");
             }
             byte[] bytes = image.getBytes();
-            Path srcPath = Paths.get("src");
-            Path imageManagerPath = srcPath.resolveSibling("image_manager");
+            Path imageManagerPath = Paths.get("/api/image_manager");
             Path userFolderPath = imageManagerPath.resolve(user.getId().toString());
             File userFolder = userFolderPath.toFile();
             System.out.println(userFolder);

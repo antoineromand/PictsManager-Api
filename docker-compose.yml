@@ -25,6 +25,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      - ./image_manager:/api/image_manager
 
   api:
     container_name: api
