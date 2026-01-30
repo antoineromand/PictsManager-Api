@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity()
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +38,7 @@ public class User {
     private Set<Image> image;
 
     public User() {
-        super();
+
     }
 
     public User(String username, String password, String email, Date dateOfBirth, boolean isBanned, boolean isPublic) {
