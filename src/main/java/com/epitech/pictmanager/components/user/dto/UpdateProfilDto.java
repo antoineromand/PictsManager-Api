@@ -1,5 +1,12 @@
 package com.epitech.pictmanager.components.user.dto;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class UpdateProfilDto {
     private String description;
 
@@ -7,15 +14,4 @@ public class UpdateProfilDto {
 
     private String coverPicture;
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getProfilePicture() {
-        return profilePicture;
-    }
-
-    public String getCoverPicture() {
-        return coverPicture;
-    }
 }

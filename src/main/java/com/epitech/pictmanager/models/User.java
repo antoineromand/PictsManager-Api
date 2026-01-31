@@ -1,8 +1,10 @@
 package com.epitech.pictmanager.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
@@ -11,28 +13,48 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
+    @Setter
     private Long id;
 
     @Column(unique = true, nullable = false)
+    @Getter
+    @Setter
     private String username;
+
     @Column(nullable = false)
+    @Getter
+    @Setter
     private String password;
+
+    @Getter
+    @Setter
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Getter
+    @Setter
     @Column(nullable = false)
     private Date dateOfBirth;
 
     @Column(nullable = false)
+    @Getter
+    @Setter
     private Boolean isBanned;
 
     @Column(nullable = false)
+    @Getter
+    @Setter
     private Boolean isPublic;
 
+    @Getter
+    @Setter
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private Profil profile;
 
+    @Getter
+    @Setter
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<Image> image;
@@ -50,75 +72,4 @@ public class User {
         this.isPublic = isPublic;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Boolean getBanned() {
-        return isBanned;
-    }
-
-    public void setBanned(Boolean banned) {
-        isBanned = banned;
-    }
-
-    public Boolean getPublic() {
-        return isPublic;
-    }
-
-    public void setPublic(Boolean aPublic) {
-        isPublic = aPublic;
-    }
-
-    public Profil getProfile() {
-        return profile;
-    }
-
-    public void setProfile(Profil profile) {
-        this.profile = profile;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public Set<Image> getImage() {
-        return image;
-    }
-
-    public void setImage(Set<Image> image) {
-        this.image = image;
-    }
 }

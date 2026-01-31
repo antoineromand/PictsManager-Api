@@ -19,13 +19,16 @@ import org.springframework.web.bind.annotation.*;
 @RestController()
 @RequestMapping("private/api/user")
 public class UserController {
-    @Autowired
-    private UserJpaRepository userRepository;
-    @Autowired
-    private ProfilJpaRepository profileRepository;
+    private final UserJpaRepository userRepository;
+    private final ProfilJpaRepository profileRepository;
+    private final UserService userService;
 
-    @Autowired
-    private UserService userService;
+    public UserController(UserJpaRepository userRepository, ProfilJpaRepository profileRepository, UserService userService) {
+        this.userRepository = userRepository;
+        this.profileRepository = profileRepository;
+        this.userService = userService;
+    }
+
     @GetMapping("/me/profil")
     public ResponseEntity<Profil> getProfil(@AuthenticationPrincipal String id) {
         User user = this.userRepository.findUserById(Long.parseLong(id));

@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS images
     id          BIGINT NOT NULL auto_increment PRIMARY KEY,
     description VARCHAR(100) NULL,
     name        VARCHAR(255) NULL,
-    path        VARCHAR(512) NULL,
+    path        VARCHAR(512) NOT NULL,
     date        DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_id     BIGINT NOT NULL,
     INDEX idx_images_user_id (user_id),

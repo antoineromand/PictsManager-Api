@@ -19,11 +19,11 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private UserJpaRepository userRepository;
-    private ProfilJpaRepository profileRepository;
+    private final UserJpaRepository userRepository;
+    private final ProfilJpaRepository profileRepository;
 
-    private PasswordEncryptionService passwordEncryptionService;
-    @Autowired
+    private final PasswordEncryptionService passwordEncryptionService;
+
     public UserService(UserJpaRepository userRepository, ProfilJpaRepository profileRepository, PasswordEncryptionService passwordEncryptionService) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
@@ -109,8 +109,8 @@ public class UserService {
                 updatedFields.add("email");
                 hasChanged = true;
             }
-            if (updateSecurityDto.getVisibility() != null && !user.getPublic().equals(updateSecurityDto.getVisibility())) {
-                user.setPublic(updateSecurityDto.getVisibility());
+            if (updateSecurityDto.getVisibility() != null && !user.getIsPublic().equals(updateSecurityDto.getVisibility())) {
+                user.setIsPublic(updateSecurityDto.getVisibility());
                 updatedFields.add("isPublic");
                 hasChanged = true;
             }

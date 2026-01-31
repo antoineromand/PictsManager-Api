@@ -4,17 +4,20 @@ import com.epitech.pictmanager.components.auth.dto.LoginDto;
 import com.epitech.pictmanager.components.auth.dto.RegisterDto;
 import com.epitech.pictmanager.components.auth.services.AuthService;
 import com.epitech.pictmanager.responses.GenericResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 
 @RestController()
 @RequestMapping("public/api/auth")
 public class AuthController {
-    @Autowired
-    AuthService authService;
+
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @GetMapping()
     public String index() {

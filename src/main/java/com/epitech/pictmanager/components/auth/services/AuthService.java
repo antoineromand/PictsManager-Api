@@ -7,6 +7,7 @@ import com.epitech.pictmanager.components.user.repositories.UserJpaRepository;
 import com.epitech.pictmanager.models.Profil;
 import com.epitech.pictmanager.models.User;
 import com.epitech.pictmanager.responses.GenericResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -14,8 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,14 +23,14 @@ import java.util.Date;
 
 @Service
 public class AuthService {
-    private UserJpaRepository userRepository;
-    private ProfilJpaRepository profileRepository;
+    private final UserJpaRepository userRepository;
+    private final ProfilJpaRepository profileRepository;
 
-    private JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     private final PasswordEncryptionService passwordEncryptionService;
 
-    @Autowired
+
     public AuthService(UserJpaRepository userRepository, ProfilJpaRepository profileRepository, PasswordEncryptionService passwordEncryptionService, JwtTokenProvider jwtTokenProvider) {
         this.passwordEncryptionService = passwordEncryptionService;
         this.userRepository = userRepository;

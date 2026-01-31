@@ -1,21 +1,14 @@
 package com.epitech.pictmanager.components.auth.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
+@RequiredArgsConstructor
 public class LoginDto {
-    @NotNull
-    @NotBlank
+    @Getter  @Setter @NonNull
     private String username;
-    @NotNull
-    @NotBlank
+    @Getter  @Setter @NonNull
     private String password;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 }

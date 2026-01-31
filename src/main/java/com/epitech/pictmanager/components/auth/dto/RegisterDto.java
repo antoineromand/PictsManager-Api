@@ -2,35 +2,47 @@ package com.epitech.pictmanager.components.auth.dto;
 
 import com.epitech.pictmanager.models.Profil;
 import com.epitech.pictmanager.models.User;
-import lombok.Builder;
-import lombok.Data;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.util.Date;
-import javax.validation.Validation.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Size;
-@Builder
-@Data
+
+@RequiredArgsConstructor
 public class RegisterDto {
     @NotBlank
     @Size(min = 3, max = 50)
+    @Getter @Setter
     private String username;
 
     @NotBlank
     @Size(min = 6, max = 100)
+    @Getter @Setter
     private String password;
 
     @NotBlank
     @Size(max = 50)
     @Email
+    @Getter @Setter
     private String email;
+
+    @Getter @Setter
     private String dateOfBirth;
+
+    @Getter @Setter
     private boolean isBanned = false;
+
+    @Getter @Setter
     private boolean isPublic = true;
+
+    @Getter @Setter
     private String description;
+
+    @Getter @Setter
     private String profilePicture;
+
+    @Getter @Setter
     private String coverPicture;
 
     public static User toUser(RegisterDto registerDto) {
@@ -39,8 +51,8 @@ public class RegisterDto {
         user.setPassword(registerDto.getPassword());
         user.setEmail(registerDto.getEmail());
         user.setDateOfBirth(new Date(registerDto.getDateOfBirth()));
-        user.setBanned(false);
-        user.setPublic(true);
+        user.setIsBanned(false);
+        user.setIsPublic(true);
         return user;
     }
 
@@ -51,42 +63,6 @@ public class RegisterDto {
         profil.setCoverPicture(null);
         profil.setUser(user);
         return profil;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public boolean isBanned() {
-        return isBanned;
-    }
-
-    public boolean isPublic() {
-        return isPublic;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getProfilePicture() {
-        return profilePicture;
-    }
-
-    public String getCoverPicture() {
-        return coverPicture;
     }
 
 }

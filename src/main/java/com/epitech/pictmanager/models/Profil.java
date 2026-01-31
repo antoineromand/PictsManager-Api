@@ -2,27 +2,34 @@ package com.epitech.pictmanager.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.persistence.*;
-import javax.validation.constraints.Null;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity()
 @Table(name = "user_profil")
 public class Profil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter @Setter
     private Long id;
+
+    @Getter @Setter
     @Column(nullable = true)
-    @Null
     private String description;
+
     @Column(nullable = true)
-    @Null
+    @Getter @Setter
     private String profilePicture;
+
     @Column(nullable = true)
-    @Null
+    @Getter @Setter
     private String coverPicture;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonBackReference
+    @Getter @Setter
     private User user;
 
     public Profil() {
@@ -33,45 +40,5 @@ public class Profil {
         this.description = description;
         this.profilePicture = profilePicture;
         this.coverPicture = coverPicture;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getProfilePicture() {
-        return profilePicture;
-    }
-
-    public void setProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
-    }
-
-    public String getCoverPicture() {
-        return coverPicture;
-    }
-
-    public void setCoverPicture(String coverPicture) {
-        this.coverPicture = coverPicture;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

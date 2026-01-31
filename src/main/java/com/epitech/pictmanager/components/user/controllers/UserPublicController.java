@@ -16,8 +16,12 @@ import java.util.List;
 @RestController()
 @RequestMapping("public/api/user")
 public class UserPublicController {
-    @Autowired
+
     UserPublicService userPublicService;
+
+    public UserPublicController(UserPublicService userPublicService) {
+        this.userPublicService = userPublicService;
+    }
 
     @GetMapping("/search")
     public ResponseEntity<Object> search(@RequestParam("username") String username) {

@@ -15,10 +15,13 @@ import java.util.List;
 
 @Service()
 public class UserPublicService {
-    @Autowired
-    UserJpaRepository userRepository;
-    @Autowired
-    ProfilJpaRepository profilRepository;
+    private final UserJpaRepository userRepository;
+    private final ProfilJpaRepository profilRepository;
+
+    public UserPublicService(UserJpaRepository userRepository, ProfilJpaRepository profilRepository) {
+        this.userRepository = userRepository;
+        this.profilRepository = profilRepository;
+    }
 
 
     public ResponseEntity<Object> search(String username) {
@@ -34,7 +37,7 @@ public class UserPublicService {
         if (user == null) {
             return new ResponseEntity<Object>("No user found", HttpStatus.NOT_FOUND);
         }
-        UserWithoutPasswordDto userWithoutPasswordDto = new UserWithoutPasswordDto(user.getUsername(), user.getEmail(), user.getDateOfBirth(), user.getPublic(), user.getProfile(), user.getImage());
+        UserWithoutPasswordDto userWithoutPasswordDto = new UserWithoutPasswordDto(user.getUsername(), user.getEmail(), user.getDateOfBirth(), user.getIsPublic(), user.getProfile(), user.getImage());
 
         return ResponseEntity.ok(userWithoutPasswordDto);
     }
