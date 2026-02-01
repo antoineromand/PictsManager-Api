@@ -26,19 +26,16 @@ public class Profil {
     @Getter @Setter
     private String coverPicture;
 
-    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     @Getter @Setter
-    private User user;
+    private Long userId;
 
-    public Profil() {
-        super();
-    }
+    public Profil() {}
 
-    public Profil(String description, String profilePicture, String coverPicture) {
+    public Profil(String description, String profilePicture, String coverPicture, Long userId) {
         this.description = description;
         this.profilePicture = profilePicture;
         this.coverPicture = coverPicture;
+        this.userId = userId;
     }
 }

@@ -33,10 +33,8 @@ public class Image {
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
-    @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
-    @JsonBackReference
     @Getter  @Setter
-    private User user;
+    private Long userId;
 
 }
