@@ -5,6 +5,7 @@ import com.epitech.pictmanager.models.Profil;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ public class UserWithoutPasswordDto {
     private String email;
     @Getter
     @Setter
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     @Getter
     @Setter
     private Boolean isPublic;
@@ -28,7 +29,7 @@ public class UserWithoutPasswordDto {
     @Setter
     private Set<Image> images;
 
-    public UserWithoutPasswordDto(String username, String email, Date dateOfBirth, Boolean isPublic, Profil profil, Set<Image> images) {
+    public UserWithoutPasswordDto(String username, String email, LocalDate dateOfBirth, Boolean isPublic, Profil profil, Set<Image> images) {
         this.username = username;
         this.email = email;
         this.dateOfBirth = dateOfBirth;

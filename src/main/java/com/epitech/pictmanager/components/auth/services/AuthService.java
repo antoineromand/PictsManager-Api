@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.io.File;
@@ -41,19 +42,19 @@ public class AuthService {
     public ResponseEntity<GenericResponse> register(RegisterDto registerDto) {
         try {
             if(this.userRepository.existsUserByUsername(registerDto.getUsername()))
-                throw new Error("Username already taken");
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already taken");
             if(this.userRepository.existsUserByEmail(registerDto.getEmail()))
-                throw new Error("Email already taken");
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already taken");
 
             User user = RegisterDto.toUser(registerDto);
             user.setPassword(passwordEncryptionService.encrypt(user.getPassword()));
             this.userRepository.save(user);
             Profil profil = RegisterDto.toProfil(registerDto, user);
             this.profileRepository.save(profil);
-            boolean folderExist = createFolders(user.getId());
-            if (!folderExist) {
-                throw new Error("Error while creating user folder, it's seems that there is a problem with your username");
-            }
+//            boolean folderExist = createFolders(user.getId());
+//            if (!folderExist) {
+//                throw new Error("Error while creating user folder, it's seems that there is a problem with your username");
+//            }
             return new ResponseEntity<GenericResponse>(new GenericResponse("User registered successfully", HttpStatus.CREATED.value()), HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e) {
             System.out.println("Erreur de contrainte : " + e.getMostSpecificCause());

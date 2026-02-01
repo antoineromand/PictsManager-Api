@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity()
-@Table(name = "user_profil")
+@Table(name = "user_profile")
 public class Profil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,11 +18,11 @@ public class Profil {
     @Column(nullable = true)
     private String description;
 
-    @Column(nullable = true)
+    @Column(nullable = true, name = "profile_picture")
     @Getter @Setter
     private String profilePicture;
 
-    @Column(nullable = true)
+    @Column(nullable = true, name = "cover_picture")
     @Getter @Setter
     private String coverPicture;
 

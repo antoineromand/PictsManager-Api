@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -34,15 +35,15 @@ public class User {
 
     @Getter
     @Setter
-    @Column(nullable = false)
-    private Date dateOfBirth;
+    @Column(nullable = false, name = "date_of_birth")
+    private LocalDate dateOfBirth;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "is_banned")
     @Getter
     @Setter
     private Boolean isBanned;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "is_public")
     @Getter
     @Setter
     private Boolean isPublic;
@@ -63,7 +64,7 @@ public class User {
 
     }
 
-    public User(String username, String password, String email, Date dateOfBirth, boolean isBanned, boolean isPublic) {
+    public User(String username, String password, String email, LocalDate dateOfBirth, boolean isBanned, boolean isPublic) {
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;

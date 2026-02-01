@@ -4,9 +4,11 @@ import com.epitech.pictmanager.models.Profil;
 import com.epitech.pictmanager.models.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class RegisterDto {
     private String email;
 
     @Getter @Setter
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Getter @Setter
     private boolean isBanned = false;
@@ -50,7 +52,7 @@ public class RegisterDto {
         user.setUsername(registerDto.getUsername());
         user.setPassword(registerDto.getPassword());
         user.setEmail(registerDto.getEmail());
-        user.setDateOfBirth(new Date(registerDto.getDateOfBirth()));
+        user.setDateOfBirth(registerDto.getDateOfBirth());
         user.setIsBanned(false);
         user.setIsPublic(true);
         return user;

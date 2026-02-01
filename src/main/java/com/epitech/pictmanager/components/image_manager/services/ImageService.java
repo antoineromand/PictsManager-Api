@@ -8,12 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Date;
 
 @Service()
 public class ImageService {
-    @Autowired
-    private ImageJpaRepository imageJpaRepository;
+
+    private final ImageJpaRepository imageJpaRepository;
+    public ImageService(ImageJpaRepository imageJpaRepository) {
+        this.imageJpaRepository = imageJpaRepository;
+    }
     public Boolean save(ImageUploadDto imageUploadDto, String path, User user) {
         try {
             if(imageJpaRepository.findImageByPath(path) != null) {
@@ -26,7 +30,6 @@ public class ImageService {
             image.setPath(path);
             image.setName(imageUploadDto.getName());
             image.setDescription(imageUploadDto.getDescription());
-            image.setDate(new Date());
             image.setUser(user);
             imageJpaRepository.save(image);
             return true;

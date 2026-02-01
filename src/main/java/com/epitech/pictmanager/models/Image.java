@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.Instant;
 import java.util.Date;
 
 @Entity()
@@ -27,9 +29,9 @@ public class Image {
     @Getter  @Setter
     private String path;
 
-    @Column(nullable = false)
     @Getter  @Setter
-    private Date date;
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
