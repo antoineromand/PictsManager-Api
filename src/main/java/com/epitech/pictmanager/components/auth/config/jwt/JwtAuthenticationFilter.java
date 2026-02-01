@@ -25,6 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         System.out.println(">>> JWT FILTER CALLED for " + request.getRequestURI());
         if (request.getRequestURI().startsWith("/public/api")) {
             filterChain.doFilter(request, response);
+            return;
         }
         String token = getTokenFromHeader(request);
         if (token != null && jwtTokenProvider.validateToken(token)) {

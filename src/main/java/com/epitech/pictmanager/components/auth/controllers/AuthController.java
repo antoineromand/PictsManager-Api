@@ -21,13 +21,13 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<GenericResponse> register(@Valid @RequestBody RegisterDto registerDto) {
+    public ResponseEntity<GenericResponse> register(@Valid @RequestBody() RegisterDto registerDto) {
         System.out.println("RAW BODY = " + registerDto.getEmail());
         return this.authService.register(registerDto);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<GenericResponse> login(@Valid @RequestBody LoginDto loginDto, HttpServletResponse response) {
+    public ResponseEntity<GenericResponse> login(@Valid @RequestBody() LoginDto loginDto, HttpServletResponse response) {
         return this.authService.login(loginDto.getUsername(), loginDto.getPassword(), response);
     }
 }
