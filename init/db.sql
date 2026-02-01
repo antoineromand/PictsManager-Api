@@ -5,6 +5,7 @@ USE pictsmanager_api;
 CREATE TABLE IF NOT EXISTS users
 (
     id          BIGINT NOT NULL auto_increment PRIMARY KEY,
+    public_id   CHAR(36) NOT NULL UNIQUE DEFAULT (UUID()),
     username    VARCHAR(50) NOT NULL UNIQUE,
     password    VARCHAR(255) NOT NULL,
     email       VARCHAR(255) NOT NULL UNIQUE,

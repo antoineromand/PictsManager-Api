@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity()
 @Table(name = "users")
@@ -14,6 +15,11 @@ public class User {
     @Getter
     @Setter
     private Long id;
+
+    @Getter
+    @Setter
+    @Column(nullable = false, unique = true, updatable = false, insertable = false, name="public_id")
+    private UUID publicId;
 
     @Column(unique = true, nullable = false)
     @Getter
