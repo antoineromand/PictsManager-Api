@@ -1,4 +1,4 @@
-package com.epitech.pictmanager.modules.auth.services;
+package com.epitech.pictmanager.modules.auth.application.services;
 
 import org.springframework.stereotype.Service;
 

@@ -12,7 +12,7 @@ public class UploadService {
 //
 //    public Object upload(String id, MultipartFile image, String description) throws IOException {
 //        try {
-//            User user = userJpaRepository.findUserById(Long.parseLong(id));
+//            User user_management = userJpaRepository.findUserById(Long.parseLong(id));
 //            ClassPathResource resource = new ClassPathResource("key-gcs.json");
 //            Credentials credentials = GoogleCredentials.fromStream(resource.getInputStream());
 //
@@ -39,7 +39,7 @@ public class UploadService {
 //            BlobInfo imageBlobInfo = BlobInfo.newBuilder(imageBlobId).build();
 //            Blob createdImage = storage.create(imageBlobInfo, imageData);
 //            ImageUploadDto imageUploadDto = new ImageUploadDto(image.getOriginalFilename(), image, description);
-//            if (imageService.save(imageUploadDto, imagePath, user)) {
+//            if (imageService.save(imageUploadDto, imagePath, user_management)) {
 //                return ResponseEntity.status(HttpStatus.CREATED).body(new GenericResponse("Image uploaded successfully", HttpStatus.CREATED.value()));
 //            } else {
 //                throw new RuntimeException("Error while saving image");

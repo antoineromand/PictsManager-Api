@@ -1,11 +1,11 @@
-package com.epitech.pictmanager.modules.user.controllers;
+package com.epitech.pictmanager.modules.user_management.controllers;
 
-import com.epitech.pictmanager.modules.user.dto.UpdateProfilDto;
-import com.epitech.pictmanager.modules.user.dto.UpdateSecurityDto;
-import com.epitech.pictmanager.modules.user.dto.UserWithoutPasswordAndProfilDTO;
-import com.epitech.pictmanager.modules.user.repositories.ProfilJpaRepository;
+import com.epitech.pictmanager.modules.user_management.dto.UpdateProfilDto;
+import com.epitech.pictmanager.modules.user_management.dto.UpdateSecurityDto;
+import com.epitech.pictmanager.modules.user_management.dto.UserWithoutPasswordAndProfilDTO;
+import com.epitech.pictmanager.modules.user_management.repositories.ProfilJpaRepository;
 import com.epitech.pictmanager.modules.auth.infrastructure.repositories.UserJpaRepository;
-import com.epitech.pictmanager.modules.user.services.UserService;
+import com.epitech.pictmanager.modules.user_management.services.UserService;
 import com.epitech.pictmanager.models.Profil;
 import com.epitech.pictmanager.modules.auth.infrastructure.models.User;
 import com.epitech.pictmanager.shared.responses.GenericResponse;
@@ -32,7 +32,7 @@ public class UserController {
     public ResponseEntity<Profil> getProfil(@AuthenticationPrincipal String id) {
         // call port from authentication/infra/repo/ports and not repository
         User user = this.userRepository.findUserById(Long.parseLong(id));
-        //Profil profil = this.profileRepository.findProfileByUser(user);
+        //Profil profil = this.profileRepository.findProfileByUser(user_management);
 //        if (profil == null) {
 //            throw new RuntimeException("User not found");
 //        }
@@ -41,8 +41,8 @@ public class UserController {
 
     @GetMapping("/me/security")
     public ResponseEntity<UserWithoutPasswordAndProfilDTO> getUser(@AuthenticationPrincipal String id) {
-        //UserWithoutPasswordAndProfilDTO user = this.userRepository.userById(Long.parseLong(id));
-//        if (user == null) {
+        //UserWithoutPasswordAndProfilDTO user_management = this.userRepository.userById(Long.parseLong(id));
+//        if (user_management == null) {
 //            throw new RuntimeException("User not found");
 //        }
         return new ResponseEntity<>(null, HttpStatus.OK);

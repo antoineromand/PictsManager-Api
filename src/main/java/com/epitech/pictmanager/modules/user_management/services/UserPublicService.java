@@ -1,8 +1,8 @@
-package com.epitech.pictmanager.modules.user.services;
+package com.epitech.pictmanager.modules.user_management.services;
 
-import com.epitech.pictmanager.modules.user.dto.UserSearchResponse;
-import com.epitech.pictmanager.modules.user.dto.UserWithoutPasswordDto;
-import com.epitech.pictmanager.modules.user.repositories.ProfilJpaRepository;
+import com.epitech.pictmanager.modules.user_management.dto.UserSearchResponse;
+import com.epitech.pictmanager.modules.user_management.dto.UserWithoutPasswordDto;
+import com.epitech.pictmanager.modules.user_management.repositories.ProfilJpaRepository;
 import com.epitech.pictmanager.modules.auth.infrastructure.repositories.UserJpaRepository;
 import com.epitech.pictmanager.modules.auth.infrastructure.models.User;
 import org.springframework.http.HttpStatus;
@@ -35,7 +35,7 @@ public class UserPublicService {
     public ResponseEntity<Object> getUser(String username) {
         User user = userRepository.findUserByUsername(username);
         if (user == null) {
-            return new ResponseEntity<Object>("No user found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>("No user_management found", HttpStatus.NOT_FOUND);
         }
         UserWithoutPasswordDto userWithoutPasswordDto = new UserWithoutPasswordDto(user.getUsername(), user.getEmail(), user.getDateOfBirth(), user.getIsPublic());
 

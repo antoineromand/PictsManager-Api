@@ -1,11 +1,10 @@
-package com.epitech.pictmanager.modules.user.services;
+package com.epitech.pictmanager.modules.user_management.services;
 
-import com.epitech.pictmanager.modules.auth.services.PasswordEncryptionService;
-import com.epitech.pictmanager.modules.user.dto.UpdateProfilDto;
-import com.epitech.pictmanager.modules.user.dto.UpdateSecurityDto;
-import com.epitech.pictmanager.modules.user.repositories.ProfilJpaRepository;
+import com.epitech.pictmanager.modules.auth.application.services.PasswordEncryptionService;
+import com.epitech.pictmanager.modules.user_management.dto.UpdateProfilDto;
+import com.epitech.pictmanager.modules.user_management.dto.UpdateSecurityDto;
+import com.epitech.pictmanager.modules.user_management.repositories.ProfilJpaRepository;
 import com.epitech.pictmanager.modules.auth.infrastructure.repositories.UserJpaRepository;
-import com.epitech.pictmanager.models.Profil;
 import com.epitech.pictmanager.modules.auth.infrastructure.models.User;
 import com.epitech.pictmanager.shared.responses.GenericResponse;
 import com.epitech.pictmanager.shared.responses.GenericUpdateResponse;
@@ -35,7 +34,7 @@ public class UserService {
             if (user == null) {
                 throw new RuntimeException("User not found");
             }
-            //Profil profile = this.profileRepository.findProfileByUser(user);
+            //Profil profile = this.profileRepository.findProfileByUser(user_management);
 //            if(profile == null) {
 //                throw new RuntimeException("Profile not found");
 //            }
@@ -53,7 +52,7 @@ public class UserService {
             if (user == null) {
                 throw new RuntimeException("User not found");
             }
-//            Profil profil = this.profileRepository.findProfileByUser(user);
+//            Profil profil = this.profileRepository.findProfileByUser(user_management);
 //            if (profil == null) {
 //                throw new RuntimeException("Profile not found");
 //            }

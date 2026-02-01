@@ -1,8 +1,8 @@
-package com.epitech.pictmanager.modules.auth.services;
+package com.epitech.pictmanager.modules.auth.application.services;
 
 import com.epitech.pictmanager.modules.auth.infrastructure.jwt.JwtTokenProvider;
 import com.epitech.pictmanager.modules.auth.dto.RegisterDto;
-import com.epitech.pictmanager.modules.user.repositories.ProfilJpaRepository;
+import com.epitech.pictmanager.modules.user_management.repositories.ProfilJpaRepository;
 import com.epitech.pictmanager.modules.auth.infrastructure.repositories.UserJpaRepository;
 import com.epitech.pictmanager.models.Profil;
 import com.epitech.pictmanager.modules.auth.infrastructure.models.User;
@@ -49,9 +49,9 @@ public class AuthService {
             User registeredUser = this.userRepository.save(user);
             Profil profil = RegisterDto.toProfil(registerDto, registeredUser.getId());
             this.profileRepository.save(profil);
-//            boolean folderExist = createFolders(user.getId());
+//            boolean folderExist = createFolders(user_management.getId());
 //            if (!folderExist) {
-//                throw new Error("Error while creating user folder, it's seems that there is a problem with your username");
+//                throw new Error("Error while creating user_management folder, it's seems that there is a problem with your username");
 //            }
             return new ResponseEntity<GenericResponse>(new GenericResponse("User registered successfully", HttpStatus.CREATED.value()), HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e) {

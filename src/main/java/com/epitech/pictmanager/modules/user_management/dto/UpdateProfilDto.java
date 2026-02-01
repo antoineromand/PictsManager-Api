@@ -1,4 +1,4 @@
-package com.epitech.pictmanager.modules.user.dto;
+package com.epitech.pictmanager.modules.user_management.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

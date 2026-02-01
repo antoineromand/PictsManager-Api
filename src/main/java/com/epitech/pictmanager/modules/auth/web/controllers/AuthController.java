@@ -1,8 +1,8 @@
-package com.epitech.pictmanager.modules.auth.controllers;
+package com.epitech.pictmanager.modules.auth.web.controllers;
 
 import com.epitech.pictmanager.modules.auth.dto.LoginDto;
 import com.epitech.pictmanager.modules.auth.dto.RegisterDto;
-import com.epitech.pictmanager.modules.auth.services.AuthService;
+import com.epitech.pictmanager.modules.auth.application.services.AuthService;
 import com.epitech.pictmanager.shared.responses.GenericResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
