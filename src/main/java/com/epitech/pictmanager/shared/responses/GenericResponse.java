@@ -1,19 +1,17 @@
 package com.epitech.pictmanager.shared.responses;
 
-public class GenericResponse {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
+public class GenericResponse<T> {
+    private T data;
     private String message;
     private int httpCode;
 
-    public GenericResponse(String message, int httpCode) {
+    public GenericResponse(String message, int httpCode, T data) {
         this.message = message;
         this.httpCode = httpCode;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public int getHttpCode() {
-        return httpCode;
+        this.data = data;
     }
 }

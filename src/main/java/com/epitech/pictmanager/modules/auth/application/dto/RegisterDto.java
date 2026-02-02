@@ -1,13 +1,14 @@
-package com.epitech.pictmanager.modules.auth.dto;
+package com.epitech.pictmanager.modules.auth.application.dto;
 
 import com.epitech.pictmanager.models.Profil;
-import com.epitech.pictmanager.modules.auth.infrastructure.models.User;
+import com.epitech.pictmanager.modules.auth.domain.UserDomain;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class RegisterDto {
@@ -45,15 +46,16 @@ public class RegisterDto {
     @Getter @Setter
     private String coverPicture;
 
-    public static User toUser(RegisterDto registerDto) {
-        User user = new User();
-        user.setUsername(registerDto.getUsername());
-        user.setPassword(registerDto.getPassword());
-        user.setEmail(registerDto.getEmail());
-        user.setDateOfBirth(registerDto.getDateOfBirth());
-        user.setIsBanned(false);
-        user.setIsPublic(true);
-        return user;
+    public static UserDomain toUserDomain(RegisterDto registerDto, UUID publicId) {
+        return new UserDomain(
+                publicId,
+                registerDto.getUsername(),
+                registerDto.getPassword(),
+                registerDto.getEmail(),
+                registerDto.getDateOfBirth(),
+                false,
+                true
+        );
     }
 
     public static Profil toProfil(RegisterDto registerDto, Long userId) {

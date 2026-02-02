@@ -1,99 +1,55 @@
 package com.epitech.pictmanager.modules.auth.application.services;
 
+import com.epitech.pictmanager.modules.auth.domain.UserDomain;
 import com.epitech.pictmanager.modules.auth.infrastructure.jwt.JwtTokenProvider;
-import com.epitech.pictmanager.modules.auth.dto.RegisterDto;
-import com.epitech.pictmanager.modules.user_management.repositories.ProfilJpaRepository;
-import com.epitech.pictmanager.modules.auth.infrastructure.repositories.UserJpaRepository;
-import com.epitech.pictmanager.models.Profil;
-import com.epitech.pictmanager.modules.auth.infrastructure.models.User;
-import com.epitech.pictmanager.shared.responses.GenericResponse;
+import com.epitech.pictmanager.modules.auth.application.dto.RegisterDto;
+import com.epitech.pictmanager.modules.auth.infrastructure.repositories.ports.UserRepositoryPort;
+import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfilJpaRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 @Service
 public class AuthService {
-    private final UserJpaRepository userRepository;
-    private final ProfilJpaRepository profileRepository;
+    private final UserRepositoryPort userRepository;
 
     private final JwtTokenProvider jwtTokenProvider;
 
     private final PasswordEncryptionService passwordEncryptionService;
 
 
-    public AuthService(UserJpaRepository userRepository, ProfilJpaRepository profileRepository, PasswordEncryptionService passwordEncryptionService, JwtTokenProvider jwtTokenProvider) {
+    public AuthService(UserRepositoryPort userRepository, ProfilJpaRepository profileRepository, PasswordEncryptionService passwordEncryptionService, JwtTokenProvider jwtTokenProvider) {
         this.passwordEncryptionService = passwordEncryptionService;
         this.userRepository = userRepository;
-        this.profileRepository = profileRepository;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    public ResponseEntity<GenericResponse> register(RegisterDto registerDto) {
-        try {
-            if(this.userRepository.existsUserByUsername(registerDto.getUsername()))
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already taken");
-            if(this.userRepository.existsUserByEmail(registerDto.getEmail()))
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already taken");
+    public UserDomain register(RegisterDto registerDto) {
+        UserDomain user = RegisterDto.toUserDomain(registerDto, null);
+        user.setPassword(passwordEncryptionService.encrypt(user.getPassword()));
 
-            User user = RegisterDto.toUser(registerDto);
-            user.setPassword(passwordEncryptionService.encrypt(user.getPassword()));
-            User registeredUser = this.userRepository.save(user);
-            Profil profil = RegisterDto.toProfil(registerDto, registeredUser.getId());
-            this.profileRepository.save(profil);
-//            boolean folderExist = createFolders(user_management.getId());
-//            if (!folderExist) {
-//                throw new Error("Error while creating user_management folder, it's seems that there is a problem with your username");
-//            }
-            return new ResponseEntity<GenericResponse>(new GenericResponse("User registered successfully", HttpStatus.CREATED.value()), HttpStatus.CREATED);
+        try {
+            return userRepository.createUser(user);
+        } catch (ResponseStatusException e) {
+            throw e; // déjà un code HTTP clair
         } catch (DataIntegrityViolationException e) {
-            System.out.println("Erreur de contrainte : " + e.getMostSpecificCause());
-            return new ResponseEntity<GenericResponse>(new GenericResponse(e.getMessage(), HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already taken", e);
         }
     }
 
-    public boolean createFolders(Long id) {
+    public String login(String username, String password, HttpServletResponse response) {
         try {
-            Path imageManagerPath = Paths.get("/image_manager");
-            Path userFolderPath = imageManagerPath.resolve(id.toString());
-            File userFile = userFolderPath.toFile();
-            if (!userFile.exists()) {
-                if (userFile.mkdir()) {
-                    System.out.println(userFile.getPath());
-                    return true;
-                }
-            }
-            return false;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
-    }
-
-    public ResponseEntity<GenericResponse> login(String username, String password, HttpServletResponse response) {
-        try {
-            User user = this.userRepository.findUserByUsername(username);
+            UserDomain user = this.userRepository.getUserByUsername(username);
             if (user == null)
-                throw new Error("User not found");
+                throw new Error("Invalid username or password");
             if (!passwordEncryptionService.check(password, user.getPassword()))
-                throw new Error("Wrong password");
-            String token = jwtTokenProvider.createToken(user.getId());
+                throw new Error("Invalid username or password");
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Authorization", "Bearer " + token);
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(new GenericResponse("User logged in successfully", HttpStatus.OK.value()));
+            return jwtTokenProvider.createToken(user.getUserId());
         } catch (Error e) {
-            return new ResponseEntity<GenericResponse>(new GenericResponse(e.getMessage(), HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+            throw e;
         }
     }
 }

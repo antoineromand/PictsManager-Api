@@ -1,10 +1,10 @@
-package com.epitech.pictmanager.modules.user_management.services;
+package com.epitech.pictmanager.modules.user_management.application.services;
 
-import com.epitech.pictmanager.modules.user_management.dto.UserSearchResponse;
-import com.epitech.pictmanager.modules.user_management.dto.UserWithoutPasswordDto;
-import com.epitech.pictmanager.modules.user_management.repositories.ProfilJpaRepository;
-import com.epitech.pictmanager.modules.auth.infrastructure.repositories.UserJpaRepository;
-import com.epitech.pictmanager.modules.auth.infrastructure.models.User;
+import com.epitech.pictmanager.modules.auth.domain.UserDomain;
+import com.epitech.pictmanager.modules.auth.infrastructure.repositories.ports.UserRepositoryPort;
+import com.epitech.pictmanager.modules.user_management.application.dto.UserSearchResponse;
+import com.epitech.pictmanager.modules.user_management.application.dto.UserWithoutPasswordDto;
+import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfilJpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,10 +14,10 @@ import java.util.List;
 
 @Service()
 public class UserPublicService {
-    private final UserJpaRepository userRepository;
+    private final UserRepositoryPort userRepository;
     private final ProfilJpaRepository profilRepository;
 
-    public UserPublicService(UserJpaRepository userRepository, ProfilJpaRepository profilRepository) {
+    public UserPublicService(UserRepositoryPort userRepository, ProfilJpaRepository profilRepository) {
         this.userRepository = userRepository;
         this.profilRepository = profilRepository;
     }
@@ -33,11 +33,11 @@ public class UserPublicService {
     }
 
     public ResponseEntity<Object> getUser(String username) {
-        User user = userRepository.findUserByUsername(username);
+        UserDomain user = this.userRepository.getUserByUsername(username);
         if (user == null) {
             return new ResponseEntity<Object>("No user_management found", HttpStatus.NOT_FOUND);
         }
-        UserWithoutPasswordDto userWithoutPasswordDto = new UserWithoutPasswordDto(user.getUsername(), user.getEmail(), user.getDateOfBirth(), user.getIsPublic());
+        UserWithoutPasswordDto userWithoutPasswordDto = new UserWithoutPasswordDto(user.getUsername(), user.getEmail(), user.getBirthDate(), user.isPublic());
 
         return ResponseEntity.ok(userWithoutPasswordDto);
     }

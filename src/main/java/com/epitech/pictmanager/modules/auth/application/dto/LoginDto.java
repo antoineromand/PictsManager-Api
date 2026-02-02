@@ -1,4 +1,4 @@
-package com.epitech.pictmanager.modules.auth.dto;
+package com.epitech.pictmanager.modules.auth.application.dto;
 
 import lombok.Getter;
 import lombok.NonNull;

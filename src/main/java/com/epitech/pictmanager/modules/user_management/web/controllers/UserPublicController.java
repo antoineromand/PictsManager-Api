@@ -1,6 +1,6 @@
-package com.epitech.pictmanager.modules.user_management.controllers;
+package com.epitech.pictmanager.modules.user_management.web.controllers;
 
-import com.epitech.pictmanager.modules.user_management.services.UserPublicService;
+import com.epitech.pictmanager.modules.user_management.application.services.UserPublicService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

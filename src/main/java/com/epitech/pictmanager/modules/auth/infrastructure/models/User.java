@@ -1,5 +1,6 @@
 package com.epitech.pictmanager.modules.auth.infrastructure.models;
 
+import com.epitech.pictmanager.modules.auth.domain.UserDomain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -55,13 +56,40 @@ public class User {
 
     }
 
-    public User(String username, String password, String email, LocalDate dateOfBirth, boolean isBanned, boolean isPublic) {
+    public User(Long id, UUID publicId, String username, String password, String email, LocalDate dateOfBirth, boolean isBanned, boolean isPublic) {
+        this.id = id;
+        this.publicId = publicId;
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.isBanned = isBanned;
         this.isPublic = isPublic;
+    }
+
+    public UserDomain toDomain() {
+        return new UserDomain(
+                this.getPublicId(),
+                this.getUsername(),
+                this.getPassword(),
+                this.getEmail(),
+                this.getDateOfBirth(),
+                this.getIsBanned(),
+                this.getIsPublic()
+        );
+    }
+
+    public static User fromDomain(UserDomain domain, Long id) {
+        return new User(
+                id,
+                domain.getUserId(),
+                domain.getUsername(),
+                domain.getPassword(),
+                domain.getEmail(),
+                domain.getBirthDate(),
+                domain.isBanned(),
+                domain.isPublic()
+        );
     }
 
 }

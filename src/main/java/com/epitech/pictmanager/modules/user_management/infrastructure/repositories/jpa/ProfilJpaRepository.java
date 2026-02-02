@@ -1,4 +1,4 @@
-package com.epitech.pictmanager.modules.user_management.repositories;
+package com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa;
 
 import com.epitech.pictmanager.models.Profil;
 import org.springframework.data.jpa.repository.JpaRepository;

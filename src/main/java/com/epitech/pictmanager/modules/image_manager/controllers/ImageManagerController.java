@@ -1,7 +1,7 @@
 package com.epitech.pictmanager.modules.image_manager.controllers;
 
 import com.epitech.pictmanager.modules.image_manager.services.UploadService;
-import com.epitech.pictmanager.modules.auth.infrastructure.repositories.UserJpaRepository;
+import com.epitech.pictmanager.modules.auth.infrastructure.repositories.jpa.UserJpaRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
