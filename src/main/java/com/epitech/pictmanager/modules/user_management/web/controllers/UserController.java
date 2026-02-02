@@ -7,7 +7,7 @@ import com.epitech.pictmanager.modules.user_management.application.dto.UpdateSec
 import com.epitech.pictmanager.modules.user_management.application.dto.UserWithoutPasswordAndProfilDTO;
 import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfilJpaRepository;
 import com.epitech.pictmanager.modules.user_management.application.services.UserService;
-import com.epitech.pictmanager.models.Profil;
+import com.epitech.pictmanager.modules.user_management.infrastructure.models.UserProfil;
 import com.epitech.pictmanager.shared.responses.GenericResponse;
 import com.epitech.pictmanager.shared.responses.GenericUpdateResponse;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @GetMapping("/me/profil")
-    public ResponseEntity<Profil> getProfil(@AuthenticationPrincipal UUID publicId) {
+    public ResponseEntity<UserProfil> getProfil(@AuthenticationPrincipal UUID publicId) {
         UserDomain user = this.userRepository.getUserByPublicId(publicId);
 
         //Profil profil = this.profileRepository.findProfileByUser(user_management);

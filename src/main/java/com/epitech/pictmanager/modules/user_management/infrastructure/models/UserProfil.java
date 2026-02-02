@@ -1,6 +1,4 @@
-package com.epitech.pictmanager.models;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+package com.epitech.pictmanager.modules.user_management.infrastructure.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +6,7 @@ import lombok.Setter;
 
 @Entity()
 @Table(name = "user_profile")
-public class Profil {
+public class UserProfil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
@@ -30,9 +28,9 @@ public class Profil {
     @Getter @Setter
     private Long userId;
 
-    public Profil() {}
+    public UserProfil() {}
 
-    public Profil(String description, String profilePicture, String coverPicture, Long userId) {
+    public UserProfil(String description, String profilePicture, String coverPicture, Long userId) {
         this.description = description;
         this.profilePicture = profilePicture;
         this.coverPicture = coverPicture;

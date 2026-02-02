@@ -1,6 +1,6 @@
 package com.epitech.pictmanager.modules.auth.application.dto;
 
-import com.epitech.pictmanager.models.Profil;
+import com.epitech.pictmanager.modules.user_management.infrastructure.models.UserProfil;
 import com.epitech.pictmanager.modules.auth.domain.UserDomain;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -58,13 +58,13 @@ public class RegisterDto {
         );
     }
 
-    public static Profil toProfil(RegisterDto registerDto, Long userId) {
-        Profil profil = new Profil();
-        profil.setDescription(null);
-        profil.setProfilePicture(null);
-        profil.setCoverPicture(null);
-        profil.setUserId(userId);
-        return profil;
-    }
+//    public static Profil toProfil(RegisterDto registerDto, Long userId) {
+//        Profil profil = new Profil();
+//        profil.setDescription(null);
+//        profil.setProfilePicture(null);
+//        profil.setCoverPicture(null);
+//        profil.setUserId(userId);
+//        return profil;
+//    } remplacer par UserProfilDomain
 
 }
