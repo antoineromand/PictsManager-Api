@@ -1,7 +1,9 @@
 package com.epitech.pictmanager.modules.auth.web.controllers;
 
-import com.epitech.pictmanager.modules.auth.application.dto.LoginDto;
-import com.epitech.pictmanager.modules.auth.application.dto.RegisterDto;
+import com.epitech.pictmanager.modules.auth.application.usecases.LoginUseCase;
+import com.epitech.pictmanager.modules.auth.application.usecases.RegisterUseCase;
+import com.epitech.pictmanager.modules.auth.web.dto.LoginDto;
+import com.epitech.pictmanager.modules.auth.web.dto.RegisterDto;
 import com.epitech.pictmanager.modules.auth.application.services.AuthService;
 import com.epitech.pictmanager.shared.responses.GenericResponse;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,21 +17,23 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("public/api/auth")
 public class AuthController {
 
-    private final AuthService authService;
+    private final LoginUseCase loginUseCase;
+    private final RegisterUseCase registerUseCase;
 
-    public AuthController(AuthService authService) {
-        this.authService = authService;
+    public AuthController(LoginUseCase loginUseCase, RegisterUseCase registerUseCase) {
+        this.loginUseCase = loginUseCase;
+        this.registerUseCase = registerUseCase;
     }
 
     @PostMapping("/register")
     public GenericResponse<Void> register(@Valid @RequestBody() RegisterDto registerDto) {
-        this.authService.register(registerDto);
+        this.registerUseCase.execute(registerDto.toCommand());
         return new GenericResponse<>("User registered successfully.", HttpStatus.CREATED.value(), null);
     }
 
     @PostMapping("/login")
     public GenericResponse<Void> login(@Valid @RequestBody() LoginDto loginDto, HttpServletResponse response) {
-        String token = this.authService.login(loginDto.getUsername(), loginDto.getPassword(), response);
+        String token = this.loginUseCase.execute(loginDto.toCommand());
         response.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token);
         return new GenericResponse<>("User logged in successfully", HttpStatus.OK.value(), null);
     }

@@ -1,5 +1,6 @@
-package com.epitech.pictmanager.modules.auth.application.dto;
+package com.epitech.pictmanager.modules.auth.web.dto;
 
+import com.epitech.pictmanager.modules.auth.application.command.LoginCommand;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -11,4 +12,8 @@ public class LoginDto {
     private String username;
     @Getter  @Setter @NonNull
     private String password;
+
+    public LoginCommand toCommand() {
+        return new LoginCommand(username, password);
+    }
 }

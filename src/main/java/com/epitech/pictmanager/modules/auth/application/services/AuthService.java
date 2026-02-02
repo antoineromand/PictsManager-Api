@@ -1,8 +1,9 @@
 package com.epitech.pictmanager.modules.auth.application.services;
 
+import com.epitech.pictmanager.modules.auth.application.command.RegisterCommand;
 import com.epitech.pictmanager.modules.auth.domain.UserDomain;
 import com.epitech.pictmanager.modules.auth.infrastructure.jwt.JwtTokenProvider;
-import com.epitech.pictmanager.modules.auth.application.dto.RegisterDto;
+import com.epitech.pictmanager.modules.auth.web.dto.RegisterDto;
 import com.epitech.pictmanager.modules.auth.infrastructure.repositories.ports.UserRepositoryPort;
 import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfilJpaRepository;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,20 +27,26 @@ public class AuthService {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    public UserDomain register(RegisterDto registerDto) {
-        UserDomain user = RegisterDto.toUserDomain(registerDto, null);
+    public void register(RegisterCommand command) {
+        UserDomain user = new UserDomain(
+           null,
+           command.username(),
+           command.password(),
+           command.email(),
+           command.birthDate(),
+           command.isBanned(),
+           command.isPublic()
+        );
         user.setPassword(passwordEncryptionService.encrypt(user.getPassword()));
 
         try {
-            return userRepository.createUser(user);
-        } catch (ResponseStatusException e) {
-            throw e; // déjà un code HTTP clair
+            userRepository.createUser(user);
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already taken", e);
         }
     }
 
-    public String login(String username, String password, HttpServletResponse response) {
+    public String login(String username, String password) {
         try {
             UserDomain user = this.userRepository.getUserByUsername(username);
             if (user == null)

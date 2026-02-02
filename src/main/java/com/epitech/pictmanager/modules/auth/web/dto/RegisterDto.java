@@ -1,6 +1,7 @@
-package com.epitech.pictmanager.modules.auth.application.dto;
+package com.epitech.pictmanager.modules.auth.web.dto;
 
-import com.epitech.pictmanager.modules.user_management.infrastructure.models.UserProfil;
+import com.epitech.pictmanager.modules.auth.application.command.LoginCommand;
+import com.epitech.pictmanager.modules.auth.application.command.RegisterCommand;
 import com.epitech.pictmanager.modules.auth.domain.UserDomain;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -53,6 +54,17 @@ public class RegisterDto {
                 registerDto.getPassword(),
                 registerDto.getEmail(),
                 registerDto.getDateOfBirth(),
+                false,
+                true
+        );
+    }
+
+    public RegisterCommand toCommand() {
+        return new RegisterCommand(
+                this.getUsername(),
+                this.getPassword(),
+                this.getEmail(),
+                this.getDateOfBirth(),
                 false,
                 true
         );
