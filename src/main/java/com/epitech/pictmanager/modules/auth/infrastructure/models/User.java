@@ -20,7 +20,7 @@ public class User {
     @Getter
     @Setter
     @Column(nullable = false, unique = true, updatable = false, insertable = false, name="public_id")
-    private UUID publicId;
+    private String publicId;
 
     @Column(unique = true, nullable = false)
     @Getter
@@ -56,7 +56,7 @@ public class User {
 
     }
 
-    public User(Long id, UUID publicId, String username, String password, String email, LocalDate dateOfBirth, boolean isBanned, boolean isPublic) {
+    public User(Long id, String publicId, String username, String password, String email, LocalDate dateOfBirth, boolean isBanned, boolean isPublic) {
         this.id = id;
         this.publicId = publicId;
         this.username = username;

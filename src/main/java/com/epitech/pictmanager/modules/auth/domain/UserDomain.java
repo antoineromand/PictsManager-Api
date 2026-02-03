@@ -9,7 +9,7 @@ import java.util.UUID;
 public class UserDomain {
     @Getter
     @Setter
-    private UUID userId;
+    private String userId;
     @Getter
     @Setter
     private String username;
@@ -29,7 +29,7 @@ public class UserDomain {
     @Setter
     private LocalDate birthDate;
 
-    public UserDomain(UUID id, String username, String password, String email, LocalDate birthDate, Boolean isBanned, Boolean isPublic) {
+    public UserDomain(String id, String username, String password, String email, LocalDate birthDate, Boolean isBanned, Boolean isPublic) {
         this.userId = id;
         this.username = username;
         this.password = password;

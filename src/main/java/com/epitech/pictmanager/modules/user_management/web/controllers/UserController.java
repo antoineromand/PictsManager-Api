@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @GetMapping("/me/profil")
-    public ResponseEntity<UserProfil> getProfil(@AuthenticationPrincipal UUID publicId) {
+    public ResponseEntity<UserProfil> getProfil(@AuthenticationPrincipal String publicId) {
         UserDomain user = this.userRepository.getUserByPublicId(publicId);
 
         //Profil profil = this.profileRepository.findProfileByUser(user_management);
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/me/security")
-    public ResponseEntity<UserWithoutPasswordAndProfilDTO> getUser(@AuthenticationPrincipal UUID id) {
+    public ResponseEntity<UserWithoutPasswordAndProfilDTO> getUser(@AuthenticationPrincipal String id) {
         //UserWithoutPasswordAndProfilDTO user_management = this.userRepository.userById(Long.parseLong(id));
 //        if (user_management == null) {
 //            throw new RuntimeException("User not found");
@@ -53,17 +53,17 @@ public class UserController {
     }
 
     @PutMapping("/me/profil")
-    public ResponseEntity<GenericUpdateResponse> updateProfil(@AuthenticationPrincipal UUID id, @RequestBody() UpdateProfilDto updateProfilDto) {
+    public ResponseEntity<GenericUpdateResponse> updateProfil(@AuthenticationPrincipal String id, @RequestBody() UpdateProfilDto updateProfilDto) {
         return this.userService.updateUserProfil(id, updateProfilDto);
     }
 
     @PutMapping("/me/security")
-    public ResponseEntity<GenericUpdateResponse> updateSecurity(@AuthenticationPrincipal UUID id, @RequestBody() UpdateSecurityDto updateSecurityDto) {
+    public ResponseEntity<GenericUpdateResponse> updateSecurity(@AuthenticationPrincipal String id, @RequestBody() UpdateSecurityDto updateSecurityDto) {
         return this.userService.updateUserSecurity(id, updateSecurityDto);
     }
 
     @DeleteMapping("/me")
-    public ResponseEntity<GenericResponse<Void>> deleteUser(@AuthenticationPrincipal UUID id) {
+    public ResponseEntity<GenericResponse<Void>> deleteUser(@AuthenticationPrincipal String id) {
         return this.userService.deleteUserAndProfil(id);
     }
 

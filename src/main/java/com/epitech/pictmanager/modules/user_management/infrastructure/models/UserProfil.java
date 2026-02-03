@@ -1,5 +1,6 @@
 package com.epitech.pictmanager.modules.user_management.infrastructure.models;
 
+import com.epitech.pictmanager.modules.user_management.domain.UserProfilDomain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,10 +31,21 @@ public class UserProfil {
 
     public UserProfil() {}
 
-    public UserProfil(String description, String profilePicture, String coverPicture, Long userId) {
+    public UserProfil(Long id, String description, String profilePicture, String coverPicture, Long userId) {
+        this.id = id;
         this.description = description;
         this.profilePicture = profilePicture;
         this.coverPicture = coverPicture;
         this.userId = userId;
+    }
+
+    public static UserProfil toEntity(UserProfilDomain domain, Long userId) {
+        return new UserProfil(
+                null,
+                domain.getDescription(),
+                domain.getPicture(),
+                domain.getCoverPicture(),
+                userId
+        );
     }
 }

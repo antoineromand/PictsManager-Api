@@ -47,7 +47,7 @@ public class RegisterDto {
     @Getter @Setter
     private String coverPicture;
 
-    public static UserDomain toUserDomain(RegisterDto registerDto, UUID publicId) {
+    public static UserDomain toUserDomain(RegisterDto registerDto, String publicId) {
         return new UserDomain(
                 publicId,
                 registerDto.getUsername(),
@@ -61,12 +61,15 @@ public class RegisterDto {
 
     public RegisterCommand toCommand() {
         return new RegisterCommand(
-                this.getUsername(),
-                this.getPassword(),
-                this.getEmail(),
-                this.getDateOfBirth(),
+                this.username,
+                this.password,
+                this.email,
+                this.dateOfBirth,
                 false,
-                true
+                true,
+                this.description,
+                this.profilePicture,
+                this.coverPicture
         );
     }
 

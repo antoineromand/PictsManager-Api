@@ -6,8 +6,8 @@ import java.util.UUID;
 
 public interface UserRepositoryPort {
     UserDomain getUserByUsername(String username);
-    UserDomain getUserByPublicId(UUID publicId);
+    UserDomain getUserByPublicId(String publicId);
     UserDomain createUser(UserDomain userDomain);
-    void deleteUser(UUID publicId);
+    void deleteUser(String publicId);
     UserDomain updateUser(UserDomain userDomain);
 }

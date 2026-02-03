@@ -29,7 +29,7 @@ public class UserService {
         this.passwordEncryptionService = passwordEncryptionService;
     }
 
-    public ResponseEntity<GenericResponse<Void>> deleteUserAndProfil(UUID id) {
+    public ResponseEntity<GenericResponse<Void>> deleteUserAndProfil(String id) {
         try {
             //Profil profile = this.profileRepository.findProfileByUser(user_management);
 //            if(profile == null) {
@@ -43,7 +43,7 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<GenericUpdateResponse> updateUserProfil(UUID id, UpdateProfilDto updateProfilDto) {
+    public ResponseEntity<GenericUpdateResponse> updateUserProfil(String id, UpdateProfilDto updateProfilDto) {
         try {
             UserDomain user = this.userRepository.getUserByPublicId(id);
             if (user == null) {
@@ -80,7 +80,7 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<GenericUpdateResponse> updateUserSecurity(UUID id, UpdateSecurityDto updateSecurityDto) {
+    public ResponseEntity<GenericUpdateResponse> updateUserSecurity(String id, UpdateSecurityDto updateSecurityDto) {
         try {
             UserDomain user = this.userRepository.getUserByPublicId(id);
             if (user == null) {

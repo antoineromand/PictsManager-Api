@@ -16,12 +16,12 @@ public class JwtTokenProvider {
     @Value("${jwt.expiration}")
     private long jwtExpiration;
 
-    public String createToken(UUID id) {
+    public String createToken(String id) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpiration);
 
         return Jwts.builder()
-                .setSubject(String.valueOf(id))
+                .setSubject(id)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)

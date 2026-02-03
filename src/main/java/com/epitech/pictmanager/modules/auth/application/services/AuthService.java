@@ -21,13 +21,15 @@ public class AuthService {
     private final PasswordEncryptionService passwordEncryptionService;
 
 
+
+
     public AuthService(UserRepositoryPort userRepository, ProfilJpaRepository profileRepository, PasswordEncryptionService passwordEncryptionService, JwtTokenProvider jwtTokenProvider) {
         this.passwordEncryptionService = passwordEncryptionService;
         this.userRepository = userRepository;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    public void register(RegisterCommand command) {
+    public UserDomain register(RegisterCommand command) {
         UserDomain user = new UserDomain(
            null,
            command.username(),
@@ -40,7 +42,7 @@ public class AuthService {
         user.setPassword(passwordEncryptionService.encrypt(user.getPassword()));
 
         try {
-            userRepository.createUser(user);
+            return userRepository.createUser(user);
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already taken", e);
         }

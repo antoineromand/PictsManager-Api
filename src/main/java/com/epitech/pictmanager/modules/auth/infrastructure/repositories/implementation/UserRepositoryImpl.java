@@ -5,7 +5,9 @@ import com.epitech.pictmanager.modules.auth.infrastructure.models.User;
 import com.epitech.pictmanager.modules.auth.infrastructure.repositories.jpa.UserJpaRepository;
 import com.epitech.pictmanager.modules.auth.infrastructure.repositories.ports.UserRepositoryPort;
 import com.epitech.pictmanager.shared.SqlExceptionCodeGlobal;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,9 @@ import java.util.UUID;
 
 @Component
 public class UserRepositoryImpl implements UserRepositoryPort {
+    @PersistenceContext
+    private EntityManager em;
+
     private final UserJpaRepository userJpaRepository;
 
     public UserRepositoryImpl(UserJpaRepository userJpaRepository) {
@@ -32,7 +37,7 @@ public class UserRepositoryImpl implements UserRepositoryPort {
     }
 
     @Override
-    public UserDomain getUserByPublicId(UUID publicId) {
+    public UserDomain getUserByPublicId(String publicId) {
         User userEntity = this.userJpaRepository.findUserByPublicId(publicId).orElseThrow(
                 () -> new EntityNotFoundException("User not found with public id: " + publicId)
         );
@@ -43,8 +48,10 @@ public class UserRepositoryImpl implements UserRepositoryPort {
     public UserDomain createUser(UserDomain userDomain) {
         try {
             User user = User.fromDomain(userDomain, null);
-            this.userJpaRepository.save(user);
-            return user.toDomain();
+            User saved = this.userJpaRepository.save(user);
+            em.flush();
+            em.refresh(saved);
+            return saved.toDomain();
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
@@ -55,7 +62,7 @@ public class UserRepositoryImpl implements UserRepositoryPort {
     }
 
     @Override
-    public void deleteUser(UUID publicId) {
+    public void deleteUser(String publicId) {
         User userEntity = this.userJpaRepository.findUserByPublicId(publicId).orElseThrow(
                 () -> new EntityNotFoundException("User not found with public id: " + publicId)
         );
