@@ -46,19 +46,11 @@ public class UserRepositoryImpl implements UserRepositoryPort {
 
     @Override
     public UserDomain createUser(UserDomain userDomain) {
-        try {
-            User user = User.fromDomain(userDomain, null);
-            User saved = this.userJpaRepository.save(user);
-            em.flush();
-            em.refresh(saved);
-            return saved.toDomain();
-        } catch (DataIntegrityViolationException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "Username already taken",
-                    e
-            );
-        }
+        User user = User.fromDomain(userDomain, null);
+        User saved = this.userJpaRepository.save(user);
+        em.flush();
+        em.refresh(saved);
+        return saved.toDomain();
     }
 
     @Override

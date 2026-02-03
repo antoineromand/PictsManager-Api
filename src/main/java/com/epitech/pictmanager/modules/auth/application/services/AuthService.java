@@ -1,6 +1,7 @@
 package com.epitech.pictmanager.modules.auth.application.services;
 
 import com.epitech.pictmanager.modules.auth.application.command.RegisterCommand;
+import com.epitech.pictmanager.modules.auth.application.exceptions.UsernameOrEmailAlreadyTakenException;
 import com.epitech.pictmanager.modules.auth.domain.UserDomain;
 import com.epitech.pictmanager.modules.auth.infrastructure.jwt.JwtTokenProvider;
 import com.epitech.pictmanager.modules.auth.web.dto.RegisterDto;
@@ -44,21 +45,17 @@ public class AuthService {
         try {
             return userRepository.createUser(user);
         } catch (DataIntegrityViolationException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already taken", e);
+            throw new UsernameOrEmailAlreadyTakenException();
         }
     }
 
     public String login(String username, String password) {
-        try {
-            UserDomain user = this.userRepository.getUserByUsername(username);
-            if (user == null)
-                throw new Error("Invalid username or password");
-            if (!passwordEncryptionService.check(password, user.getPassword()))
-                throw new Error("Invalid username or password");
+        UserDomain user = this.userRepository.getUserByUsername(username);
+        if (user == null)
+            throw new Error("Invalid username or password");
+        if (!passwordEncryptionService.check(password, user.getPassword()))
+            throw new Error("Invalid username or password");
 
-            return jwtTokenProvider.createToken(user.getUserId());
-        } catch (Error e) {
-            throw e;
-        }
+        return jwtTokenProvider.createToken(user.getUserId());
     }
 }

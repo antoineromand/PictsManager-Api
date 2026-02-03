@@ -19,7 +19,6 @@ public class RegisterUseCase {
     @Transactional
     public void execute(RegisterCommand command) {
         UserDomain user = this.authService.register(command);
-        System.out.println(user.getUserId());
         CreateProfilCommand profilCommand = new CreateProfilCommand(
             command.description(), command.coverPicture(), command.profilePicture(), user.getUserId()
         );
