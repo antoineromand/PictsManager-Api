@@ -33,10 +33,10 @@ public class UserPublicService {
     }
 
     public ResponseEntity<Object> getUser(String username) {
-        UserDomain user = this.userRepository.getUserByUsername(username);
-        if (user == null) {
-            return new ResponseEntity<Object>("No user_management found", HttpStatus.NOT_FOUND);
-        }
+        UserDomain user = this.userRepository.getUserByUsername(username).orElseThrow(
+                () -> new RuntimeException("User not found with username: " + username)
+        );
+
         UserWithoutPasswordDto userWithoutPasswordDto = new UserWithoutPasswordDto(user.getUsername(), user.getEmail(), user.getBirthDate(), user.isPublic());
 
         return ResponseEntity.ok(userWithoutPasswordDto);

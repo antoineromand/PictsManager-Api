@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -29,11 +30,9 @@ public class UserRepositoryImpl implements UserRepositoryPort {
 
 
     @Override
-    public UserDomain getUserByUsername(String username) {
-        User userEntity = this.userJpaRepository.findUserByUsername(username).orElseThrow(
-                () -> new EntityNotFoundException("User not found with username: " + username)
-        );
-        return userEntity.toDomain();
+    public Optional<UserDomain> getUserByUsername(String username) {
+        return this.userJpaRepository.findUserByUsername(username)
+                .map(User::toDomain);
     }
 
     @Override
