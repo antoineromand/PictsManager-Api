@@ -1,7 +1,7 @@
 package com.epitech.pictmanager.app.config;
 
-import com.epitech.pictmanager.modules.auth.infrastructure.jwt.JwtAuthenticationFilter;
-import com.epitech.pictmanager.modules.auth.infrastructure.jwt.JwtTokenProvider;
+import com.epitech.pictmanager.app.config.jwt.JwtAuthenticationFilter;
+import com.epitech.pictmanager.shared.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

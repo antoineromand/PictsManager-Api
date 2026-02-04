@@ -1,6 +1,6 @@
 package com.epitech.pictmanager.modules.user_management.application.dto.read;
 
-import java.util.Date;
+import java.sql.Date;
 
 public record UserProfileReadModel(
         String username,

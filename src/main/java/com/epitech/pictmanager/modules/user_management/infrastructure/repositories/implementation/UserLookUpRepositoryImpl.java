@@ -11,10 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Optional;
-import java.util.UUID;
+
 
 @Repository
 @RequiredArgsConstructor

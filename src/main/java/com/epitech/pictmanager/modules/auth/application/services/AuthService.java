@@ -4,15 +4,11 @@ import com.epitech.pictmanager.modules.auth.application.command.RegisterCommand;
 import com.epitech.pictmanager.modules.auth.application.exceptions.InvalidCredentialsException;
 import com.epitech.pictmanager.modules.auth.application.exceptions.UsernameOrEmailAlreadyTakenException;
 import com.epitech.pictmanager.modules.auth.domain.UserDomain;
-import com.epitech.pictmanager.modules.auth.infrastructure.jwt.JwtTokenProvider;
-import com.epitech.pictmanager.modules.auth.web.dto.RegisterDto;
+import com.epitech.pictmanager.shared.jwt.JwtTokenProvider;
 import com.epitech.pictmanager.modules.auth.infrastructure.repositories.ports.UserRepositoryPort;
 import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfileJpaRepository;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AuthService {

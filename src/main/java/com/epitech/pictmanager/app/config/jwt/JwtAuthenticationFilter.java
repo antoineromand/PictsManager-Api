@@ -1,5 +1,6 @@
-package com.epitech.pictmanager.modules.auth.infrastructure.jwt;
+package com.epitech.pictmanager.app.config.jwt;
 
+import com.epitech.pictmanager.shared.jwt.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +23,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println(">>> JWT FILTER CALLED for " + request.getRequestURI());
         if (request.getRequestURI().startsWith("/public/api")) {
             filterChain.doFilter(request, response);
             return;
