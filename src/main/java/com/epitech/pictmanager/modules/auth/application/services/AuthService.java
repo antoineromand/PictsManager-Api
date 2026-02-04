@@ -7,7 +7,7 @@ import com.epitech.pictmanager.modules.auth.domain.UserDomain;
 import com.epitech.pictmanager.modules.auth.infrastructure.jwt.JwtTokenProvider;
 import com.epitech.pictmanager.modules.auth.web.dto.RegisterDto;
 import com.epitech.pictmanager.modules.auth.infrastructure.repositories.ports.UserRepositoryPort;
-import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfilJpaRepository;
+import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfileJpaRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class AuthService {
 
 
 
-    public AuthService(UserRepositoryPort userRepository, ProfilJpaRepository profileRepository, PasswordEncryptionService passwordEncryptionService, JwtTokenProvider jwtTokenProvider) {
+    public AuthService(UserRepositoryPort userRepository, ProfileJpaRepository profileRepository, PasswordEncryptionService passwordEncryptionService, JwtTokenProvider jwtTokenProvider) {
         this.passwordEncryptionService = passwordEncryptionService;
         this.userRepository = userRepository;
         this.jwtTokenProvider = jwtTokenProvider;
@@ -52,7 +52,7 @@ public class AuthService {
 
     public String login(String username, String password) {
         UserDomain user = this.userRepository.getUserByUsername(username).orElseThrow(
-                UsernameOrEmailAlreadyTakenException::new
+                InvalidCredentialsException::new
         );
         if (!passwordEncryptionService.check(password, user.getPassword()))
             throw new InvalidCredentialsException();

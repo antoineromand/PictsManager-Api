@@ -4,7 +4,7 @@ import com.epitech.pictmanager.modules.auth.domain.UserDomain;
 import com.epitech.pictmanager.modules.auth.infrastructure.repositories.ports.UserRepositoryPort;
 import com.epitech.pictmanager.modules.user_management.application.dto.UserSearchResponse;
 import com.epitech.pictmanager.modules.user_management.application.dto.UserWithoutPasswordDto;
-import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfilJpaRepository;
+import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfileJpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,11 +15,11 @@ import java.util.List;
 @Service()
 public class UserPublicService {
     private final UserRepositoryPort userRepository;
-    private final ProfilJpaRepository profilRepository;
+    private final ProfileJpaRepository profileRepository;
 
-    public UserPublicService(UserRepositoryPort userRepository, ProfilJpaRepository profilRepository) {
+    public UserPublicService(UserRepositoryPort userRepository, ProfileJpaRepository profileRepository) {
         this.userRepository = userRepository;
-        this.profilRepository = profilRepository;
+        this.profileRepository = profileRepository;
     }
 
 

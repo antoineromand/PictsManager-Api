@@ -1,13 +1,13 @@
 package com.epitech.pictmanager.modules.user_management.infrastructure.models;
 
-import com.epitech.pictmanager.modules.user_management.domain.UserProfilDomain;
+import com.epitech.pictmanager.modules.user_management.domain.UserProfileDomain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity()
 @Table(name = "user_profile")
-public class UserProfil {
+public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
@@ -29,9 +29,9 @@ public class UserProfil {
     @Getter @Setter
     private Long userId;
 
-    public UserProfil() {}
+    public UserProfile() {}
 
-    public UserProfil(Long id, String description, String profilePicture, String coverPicture, Long userId) {
+    public UserProfile(Long id, String description, String profilePicture, String coverPicture, Long userId) {
         this.id = id;
         this.description = description;
         this.profilePicture = profilePicture;
@@ -39,8 +39,8 @@ public class UserProfil {
         this.userId = userId;
     }
 
-    public static UserProfil toEntity(UserProfilDomain domain, Long userId) {
-        return new UserProfil(
+    public static UserProfile toEntity(UserProfileDomain domain, Long userId) {
+        return new UserProfile(
                 null,
                 domain.getDescription(),
                 domain.getPicture(),

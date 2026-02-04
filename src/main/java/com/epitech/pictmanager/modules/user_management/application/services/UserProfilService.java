@@ -5,7 +5,7 @@ import com.epitech.pictmanager.modules.auth.domain.UserDomain;
 import com.epitech.pictmanager.modules.auth.infrastructure.repositories.ports.UserRepositoryPort;
 import com.epitech.pictmanager.modules.user_management.application.dto.UpdateProfilDto;
 import com.epitech.pictmanager.modules.user_management.application.dto.UpdateSecurityDto;
-import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfilJpaRepository;
+import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfileJpaRepository;
 import com.epitech.pictmanager.shared.responses.GenericResponse;
 import com.epitech.pictmanager.shared.responses.GenericUpdateResponse;
 import org.springframework.http.HttpStatus;
@@ -14,16 +14,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
-public class UserService {
+public class UserProfilService {
     private final UserRepositoryPort userRepository;
-    private final ProfilJpaRepository profileRepository;
+    private final ProfileJpaRepository profileRepository;
 
     private final PasswordEncryptionService passwordEncryptionService;
 
-    public UserService(UserRepositoryPort userRepository, ProfilJpaRepository profileRepository, PasswordEncryptionService passwordEncryptionService) {
+    public UserProfilService(UserRepositoryPort userRepository, ProfileJpaRepository profileRepository, PasswordEncryptionService passwordEncryptionService) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
         this.passwordEncryptionService = passwordEncryptionService;

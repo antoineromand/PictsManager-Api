@@ -5,9 +5,11 @@ import com.epitech.pictmanager.modules.auth.infrastructure.repositories.ports.Us
 import com.epitech.pictmanager.modules.user_management.application.dto.UpdateProfilDto;
 import com.epitech.pictmanager.modules.user_management.application.dto.UpdateSecurityDto;
 import com.epitech.pictmanager.modules.user_management.application.dto.UserWithoutPasswordAndProfilDTO;
-import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfilJpaRepository;
-import com.epitech.pictmanager.modules.user_management.application.services.UserService;
-import com.epitech.pictmanager.modules.user_management.infrastructure.models.UserProfil;
+import com.epitech.pictmanager.modules.user_management.application.usecases.GetUserProfileUseCase;
+import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfileJpaRepository;
+import com.epitech.pictmanager.modules.user_management.application.services.UserProfilService;
+import com.epitech.pictmanager.modules.user_management.infrastructure.models.UserProfile;
+import com.epitech.pictmanager.modules.user_management.web.dto.UserProfileView;
 import com.epitech.pictmanager.shared.responses.GenericResponse;
 import com.epitech.pictmanager.shared.responses.GenericUpdateResponse;
 import org.springframework.http.HttpStatus;
@@ -19,28 +21,25 @@ import java.util.UUID;
 
 @RestController()
 @RequestMapping("private/api/user")
-public class UserController {
+public class UserManagementController {
     private final UserRepositoryPort userRepository;
-    private final ProfilJpaRepository profileRepository;
-    private final UserService userService;
+    private final ProfileJpaRepository profileRepository;
+    private final GetUserProfileUseCase getUserProfileUseCase;
+    private final UserProfilService userService;
 
-    public UserController(UserRepositoryPort userRepository, ProfilJpaRepository profileRepository, UserService userService) {
+    public UserManagementController(UserRepositoryPort userRepository, ProfileJpaRepository profileRepository, GetUserProfileUseCase getUserProfileUseCase, UserProfilService userService) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
+        this.getUserProfileUseCase = getUserProfileUseCase;
         this.userService = userService;
     }
 
     @GetMapping("/me/profil")
-    public ResponseEntity<UserProfil> getProfil(@AuthenticationPrincipal String publicId) {
-        UserDomain user = this.userRepository.getUserByPublicId(publicId);
+    public GenericResponse<UserProfileView> getProfil(@AuthenticationPrincipal String publicId) {
 
-        //Profil profil = this.profileRepository.findProfileByUser(user_management);
-//        if (profil == null) {
-//            throw new RuntimeException("User not found");
-//       }
+        UserProfileView profil = this.getUserProfileUseCase.execute(publicId);
 
-        return new ResponseEntity<>(null, HttpStatus.OK);
-
+        return new GenericResponse<>(null, HttpStatus.OK.value(), profil);
     }
 
     @GetMapping("/me/security")

@@ -7,13 +7,13 @@ import lombok.Setter;
 import java.util.UUID;
 
 @Getter @Setter
-public class UserProfilDomain {
+public class UserProfileDomain {
     private final String publicId;
     private String description;
     private String coverPicture;
     private String picture;
 
-    public UserProfilDomain(String publicId, String description, String coverPicture, String picture) {
+    public UserProfileDomain(String publicId, String description, String coverPicture, String picture) {
         this.publicId = publicId;
         this.description = description;
         this.coverPicture = coverPicture;
