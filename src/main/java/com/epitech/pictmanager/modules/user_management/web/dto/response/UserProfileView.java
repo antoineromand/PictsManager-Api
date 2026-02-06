@@ -1,4 +1,4 @@
-package com.epitech.pictmanager.modules.user_management.web.dto;
+package com.epitech.pictmanager.modules.user_management.web.dto.response;
 
 import java.time.LocalDate;
 

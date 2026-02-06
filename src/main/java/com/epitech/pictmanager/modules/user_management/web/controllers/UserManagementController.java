@@ -1,6 +1,5 @@
 package com.epitech.pictmanager.modules.user_management.web.controllers;
 
-import com.epitech.pictmanager.modules.auth.domain.UserDomain;
 import com.epitech.pictmanager.modules.auth.infrastructure.repositories.ports.UserRepositoryPort;
 import com.epitech.pictmanager.modules.user_management.application.dto.UpdateProfilDto;
 import com.epitech.pictmanager.modules.user_management.application.dto.UpdateSecurityDto;
@@ -8,16 +7,13 @@ import com.epitech.pictmanager.modules.user_management.application.dto.UserWitho
 import com.epitech.pictmanager.modules.user_management.application.usecases.GetUserProfileUseCase;
 import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfileJpaRepository;
 import com.epitech.pictmanager.modules.user_management.application.services.UserProfilService;
-import com.epitech.pictmanager.modules.user_management.infrastructure.models.UserProfile;
-import com.epitech.pictmanager.modules.user_management.web.dto.UserProfileView;
+import com.epitech.pictmanager.modules.user_management.web.dto.response.UserProfileView;
 import com.epitech.pictmanager.shared.responses.GenericResponse;
 import com.epitech.pictmanager.shared.responses.GenericUpdateResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController()
 @RequestMapping("private/api/user")
