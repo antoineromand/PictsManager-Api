@@ -1,4 +1,4 @@
-package com.epitech.pictmanager.modules.user_management.application.usecases;
+package com.epitech.pictmanager.modules.user_management.application.usecases.search;
 
 import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.ports.ProfileRepositoryPort;
 import com.epitech.pictmanager.modules.user_management.web.dto.response.SearchListResponseDTO;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SearchUserProfileUseCase {
+public class GetUsersFromSearchUseCase {
 
     public final ProfileRepositoryPort profileRepositoryPort;
 
-    public SearchUserProfileUseCase(ProfileRepositoryPort profileRepositoryPort) {
+    public GetUsersFromSearchUseCase(ProfileRepositoryPort profileRepositoryPort) {
         this.profileRepositoryPort = profileRepositoryPort;
     }
 

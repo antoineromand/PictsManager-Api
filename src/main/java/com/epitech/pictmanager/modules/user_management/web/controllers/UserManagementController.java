@@ -4,7 +4,7 @@ import com.epitech.pictmanager.modules.auth.infrastructure.repositories.ports.Us
 import com.epitech.pictmanager.modules.user_management.application.dto.UpdateProfilDto;
 import com.epitech.pictmanager.modules.user_management.application.dto.UpdateSecurityDto;
 import com.epitech.pictmanager.modules.user_management.application.dto.UserWithoutPasswordAndProfilDTO;
-import com.epitech.pictmanager.modules.user_management.application.usecases.GetUserProfileUseCase;
+import com.epitech.pictmanager.modules.user_management.application.usecases.profil.GetUserProfileUseCase;
 import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfileJpaRepository;
 import com.epitech.pictmanager.modules.user_management.application.services.UserProfilService;
 import com.epitech.pictmanager.modules.user_management.web.dto.response.UserProfileView;

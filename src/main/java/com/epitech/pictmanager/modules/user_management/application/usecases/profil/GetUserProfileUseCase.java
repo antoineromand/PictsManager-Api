@@ -1,4 +1,4 @@
-package com.epitech.pictmanager.modules.user_management.application.usecases;
+package com.epitech.pictmanager.modules.user_management.application.usecases.profil;
 
 import com.epitech.pictmanager.modules.user_management.application.dto.read.UserProfileReadModel;
 import com.epitech.pictmanager.modules.user_management.application.exceptions.ProfileNotFoundException;
