@@ -1,6 +1,6 @@
-package com.epitech.pictmanager.modules.user_management.web.dto.response;
+package com.epitech.pictmanager.modules.user_management.web.dto.view;
 
-public record UserProfilDetailView(
+public record UserProfileDetailView(
         String username,
         String description,
         String picture,

@@ -2,6 +2,7 @@ package com.epitech.pictmanager.modules.user_management.infrastructure.repositor
 
 import com.epitech.pictmanager.modules.user_management.application.dto.read.UserProfileReadModel;
 import com.epitech.pictmanager.modules.user_management.application.dto.read.UserProfileSearchReadModel;
+import com.epitech.pictmanager.modules.user_management.application.dto.read.UserPublicProfileReadModel;
 import com.epitech.pictmanager.modules.user_management.domain.UserProfileDomain;
 import com.epitech.pictmanager.modules.user_management.infrastructure.models.UserProfile;
 import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfileJpaRepository;
@@ -102,4 +103,33 @@ public class ProfileRepositoryImpl implements ProfileRepositoryPort {
         Long count = (Long) em.createNativeQuery(query, Long.class).setParameter("searchInput", "%" + searchInput + "%").getSingleResult();
         return count.intValue();
     }
+
+    @Override
+    public Optional<UserPublicProfileReadModel> getUserPublicProfilWithUsername(String username) {
+        var query = """
+                        SELECT
+                            u.username        AS username,
+                            p.profile_picture AS profile_picture,
+                            p.cover_picture AS cover_picture,
+                            p.description     AS description,
+                            u.is_public       AS is_public
+                        FROM users u
+                        LEFT JOIN user_profile p ON p.user_id = u.id
+                        WHERE u.username = :username
+                        """;
+        Tuple tuple = (Tuple) em.createNativeQuery(query, Tuple.class)
+                .setParameter("username", username)
+                .getSingleResult();
+        return Optional.of(
+                new UserPublicProfileReadModel(
+                        tuple.get("username", String.class),
+                        tuple.get("description", String.class),
+                        tuple.get("is_public", Boolean.class),
+                        tuple.get("profile_picture", String.class),
+                        tuple.get("cover_picture", String.class)
+                        )
+        );
+    }
+
+
 }

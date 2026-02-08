@@ -14,12 +14,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RegisterDto {
     @NotBlank
-    @Size(min = 3, max = 50)
+    @Size(min = 8, max = 50)
     @Getter @Setter
     private String username;
 
     @NotBlank
-    @Size(min = 6, max = 100)
+    @Size(min = 8, max = 100)
     @Getter @Setter
     private String password;
 
@@ -30,7 +30,7 @@ public class RegisterDto {
     private String email;
 
     @Getter @Setter
-    private LocalDate dateOfBirth;
+    private LocalDate birthDate;
 
     @Getter @Setter
     private boolean isBanned = false;
@@ -53,7 +53,7 @@ public class RegisterDto {
                 registerDto.getUsername(),
                 registerDto.getPassword(),
                 registerDto.getEmail(),
-                registerDto.getDateOfBirth(),
+                registerDto.getBirthDate(),
                 false,
                 true
         );
@@ -64,7 +64,7 @@ public class RegisterDto {
                 this.username,
                 this.password,
                 this.email,
-                this.dateOfBirth,
+                this.birthDate,
                 false,
                 true,
                 this.description,

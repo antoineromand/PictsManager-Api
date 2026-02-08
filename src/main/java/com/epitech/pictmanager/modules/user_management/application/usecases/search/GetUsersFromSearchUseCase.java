@@ -2,7 +2,7 @@ package com.epitech.pictmanager.modules.user_management.application.usecases.sea
 
 import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.ports.ProfileRepositoryPort;
 import com.epitech.pictmanager.modules.user_management.web.dto.response.SearchListResponseDTO;
-import com.epitech.pictmanager.modules.user_management.web.dto.response.UserProfileSearchView;
+import com.epitech.pictmanager.modules.user_management.web.dto.view.UserProfileSearchView;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

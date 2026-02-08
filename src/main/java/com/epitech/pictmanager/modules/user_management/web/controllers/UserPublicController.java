@@ -4,15 +4,14 @@ import com.epitech.pictmanager.modules.user_management.application.services.User
 import com.epitech.pictmanager.modules.user_management.application.usecases.search.GetUserFromSearchUseCase;
 import com.epitech.pictmanager.modules.user_management.application.usecases.search.GetUsersFromSearchUseCase;
 import com.epitech.pictmanager.modules.user_management.web.dto.response.SearchListResponseDTO;
+import com.epitech.pictmanager.modules.user_management.web.dto.view.UserProfileDetailView;
 import com.epitech.pictmanager.shared.responses.GenericResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController()
+// Make route private ..
 @RequestMapping("public/api/user")
 public class UserPublicController {
 
@@ -36,9 +35,9 @@ public class UserPublicController {
         return new GenericResponse<>(null, HttpStatus.OK.value(), result);
     }
 
-    @GetMapping("/search/profil")
-    public ResponseEntity<Object> get(@RequestParam("username") String username) {
-        return userPublicService.getUser(username);
+    @GetMapping("/search/profile/{username}")
+    public GenericResponse<UserProfileDetailView> get(@PathVariable String username) {
+        return new GenericResponse<>(null, HttpStatus.FOUND.value(), this.getUserUseCase.execute(username));
     }
 
 }

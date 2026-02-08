@@ -3,7 +3,7 @@ package com.epitech.pictmanager.modules.user_management.application.usecases.pro
 import com.epitech.pictmanager.modules.user_management.application.dto.read.UserProfileReadModel;
 import com.epitech.pictmanager.modules.user_management.application.exceptions.ProfileNotFoundException;
 import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.implementation.ProfileRepositoryImpl;
-import com.epitech.pictmanager.modules.user_management.web.dto.response.UserProfileView;
+import com.epitech.pictmanager.modules.user_management.web.dto.view.UserProfileView;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

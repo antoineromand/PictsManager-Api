@@ -2,6 +2,7 @@ package com.epitech.pictmanager.modules.user_management.infrastructure.repositor
 
 import com.epitech.pictmanager.modules.user_management.application.dto.read.UserProfileReadModel;
 import com.epitech.pictmanager.modules.user_management.application.dto.read.UserProfileSearchReadModel;
+import com.epitech.pictmanager.modules.user_management.application.dto.read.UserPublicProfileReadModel;
 import com.epitech.pictmanager.modules.user_management.domain.UserProfileDomain;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface ProfileRepositoryPort {
     Optional<UserProfileReadModel> getUserAndProfilWithPublicId(String publicId);
     List<UserProfileSearchReadModel> getUsersAndProfilsWithSearchInput(String searchInput, int limit, int offset);
     int getTotalFromSearch(String searchInput);
+    Optional<UserPublicProfileReadModel> getUserPublicProfilWithUsername(String username);
 }
+

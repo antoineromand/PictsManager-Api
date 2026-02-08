@@ -7,7 +7,7 @@ import com.epitech.pictmanager.modules.user_management.application.dto.UserWitho
 import com.epitech.pictmanager.modules.user_management.application.usecases.profil.GetUserProfileUseCase;
 import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfileJpaRepository;
 import com.epitech.pictmanager.modules.user_management.application.services.UserProfilService;
-import com.epitech.pictmanager.modules.user_management.web.dto.response.UserProfileView;
+import com.epitech.pictmanager.modules.user_management.web.dto.view.UserProfileView;
 import com.epitech.pictmanager.shared.responses.GenericResponse;
 import com.epitech.pictmanager.shared.responses.GenericUpdateResponse;
 import org.springframework.http.HttpStatus;
