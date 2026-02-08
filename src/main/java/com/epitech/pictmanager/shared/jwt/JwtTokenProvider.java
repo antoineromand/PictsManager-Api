@@ -43,7 +43,7 @@ public class JwtTokenProvider {
 
     public String refreshToken(String token) {
         String id = this.getIdFromToken(token);
-        return this.createRefreshToken(id);
+        return this.createAccessToken(id);
     }
 
     public String getIdFromToken(String token) {
