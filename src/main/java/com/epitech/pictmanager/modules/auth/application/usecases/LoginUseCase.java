@@ -1,6 +1,7 @@
 package com.epitech.pictmanager.modules.auth.application.usecases;
 
-import com.epitech.pictmanager.modules.auth.application.command.LoginCommand;
+import com.epitech.pictmanager.modules.auth.application.dto.command.LoginCommand;
+import com.epitech.pictmanager.modules.auth.application.dto.read.TokensReadModel;
 import com.epitech.pictmanager.modules.auth.application.services.AuthService;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ public class LoginUseCase {
         this.authService = authService;
     }
 
-    public String execute(LoginCommand command) {
+    public TokensReadModel execute(LoginCommand command) {
         return this.authService.login(command.username(), command.password());
     }
 }

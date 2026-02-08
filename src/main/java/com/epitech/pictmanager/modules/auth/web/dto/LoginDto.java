@@ -1,6 +1,6 @@
 package com.epitech.pictmanager.modules.auth.web.dto;
 
-import com.epitech.pictmanager.modules.auth.application.command.LoginCommand;
+import com.epitech.pictmanager.modules.auth.application.dto.command.LoginCommand;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

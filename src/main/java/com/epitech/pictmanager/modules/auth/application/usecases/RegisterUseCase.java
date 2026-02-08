@@ -1,6 +1,6 @@
 package com.epitech.pictmanager.modules.auth.application.usecases;
 
-import com.epitech.pictmanager.modules.auth.application.command.RegisterCommand;
+import com.epitech.pictmanager.modules.auth.application.dto.command.RegisterCommand;
 import com.epitech.pictmanager.modules.auth.application.services.AuthService;
 import com.epitech.pictmanager.modules.auth.domain.UserDomain;
 import com.epitech.pictmanager.shared.contracts.command.CreateProfileCommand;

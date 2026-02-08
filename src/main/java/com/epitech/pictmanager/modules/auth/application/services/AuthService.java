@@ -1,6 +1,7 @@
 package com.epitech.pictmanager.modules.auth.application.services;
 
-import com.epitech.pictmanager.modules.auth.application.command.RegisterCommand;
+import com.epitech.pictmanager.modules.auth.application.dto.command.RegisterCommand;
+import com.epitech.pictmanager.modules.auth.application.dto.read.TokensReadModel;
 import com.epitech.pictmanager.modules.auth.application.exceptions.InvalidCredentialsException;
 import com.epitech.pictmanager.modules.auth.application.exceptions.UsernameOrEmailAlreadyTakenException;
 import com.epitech.pictmanager.modules.auth.domain.UserDomain;
@@ -17,9 +18,6 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
 
     private final PasswordEncryptionService passwordEncryptionService;
-
-
-
 
     public AuthService(UserRepositoryPort userRepository, ProfileJpaRepository profileRepository, PasswordEncryptionService passwordEncryptionService, JwtTokenProvider jwtTokenProvider) {
         this.passwordEncryptionService = passwordEncryptionService;
@@ -46,13 +44,20 @@ public class AuthService {
         }
     }
 
-    public String login(String username, String password) {
+    public TokensReadModel login(String username, String password) {
         UserDomain user = this.userRepository.getUserByUsername(username).orElseThrow(
                 InvalidCredentialsException::new
         );
         if (!passwordEncryptionService.check(password, user.getPassword()))
             throw new InvalidCredentialsException();
 
-        return jwtTokenProvider.createToken(user.getUserId());
+        String accessToken = this.jwtTokenProvider.createAccessToken(user.getUserId());
+        String refreshToken = this.jwtTokenProvider.createRefreshToken(user.getUserId());;
+
+        return new TokensReadModel(accessToken, refreshToken);
+    }
+
+    public String refreshToken(String refreshToken) {
+        return this.jwtTokenProvider.refreshToken(refreshToken);
     }
 }

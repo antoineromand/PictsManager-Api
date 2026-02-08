@@ -1,4 +1,4 @@
-package com.epitech.pictmanager.modules.auth.application.command;
+package com.epitech.pictmanager.modules.auth.application.dto.command;
 
 import java.time.LocalDate;
 

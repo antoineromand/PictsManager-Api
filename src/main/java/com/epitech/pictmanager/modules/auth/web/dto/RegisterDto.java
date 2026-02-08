@@ -1,7 +1,6 @@
 package com.epitech.pictmanager.modules.auth.web.dto;
 
-import com.epitech.pictmanager.modules.auth.application.command.LoginCommand;
-import com.epitech.pictmanager.modules.auth.application.command.RegisterCommand;
+import com.epitech.pictmanager.modules.auth.application.dto.command.RegisterCommand;
 import com.epitech.pictmanager.modules.auth.domain.UserDomain;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +8,6 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 public class RegisterDto {

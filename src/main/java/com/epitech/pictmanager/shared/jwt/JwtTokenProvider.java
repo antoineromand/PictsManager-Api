@@ -1,5 +1,6 @@
 package com.epitech.pictmanager.shared.jwt;
 
+import com.epitech.pictmanager.modules.auth.application.dto.read.TokensReadModel;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.time.Duration;
 import java.util.Date;
 
 @Component
@@ -18,9 +20,9 @@ public class JwtTokenProvider {
     @Value("${jwt.expiration}")
     private long jwtExpiration;
 
-    public String createToken(String id) {
+    private String createToken(String id, Duration duration) {
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + jwtExpiration);
+        Date expiryDate = new Date(now.getTime() + duration.toMillis());
 
 
         return Jwts.builder()
@@ -29,6 +31,19 @@ public class JwtTokenProvider {
                 .setExpiration(expiryDate)
                 .signWith(this.getSigningKey())
                 .compact();
+    }
+
+    public String createAccessToken(String id) {
+        return this.createToken(id, Duration.ofMinutes(15));
+    }
+
+    public String createRefreshToken(String id) {
+        return this.createToken(id, Duration.ofDays(7));
+    }
+
+    public String refreshToken(String token) {
+        String id = this.getIdFromToken(token);
+        return this.createRefreshToken(id);
     }
 
     public String getIdFromToken(String token) {
