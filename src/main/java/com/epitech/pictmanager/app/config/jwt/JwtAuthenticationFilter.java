@@ -28,11 +28,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         String token = getTokenFromHeader(request);
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            String id = jwtTokenProvider.getIdFromToken(token);
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(id, null, Collections.emptyList());
-            SecurityContextHolder.getContext().setAuthentication(auth);
+        if (token == null || !jwtTokenProvider.validateToken(token)) {
+            filterChain.doFilter(request, response);
+            return;
         }
+        String id = jwtTokenProvider.getIdFromToken(token);
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(id, null, Collections.emptyList());
+        SecurityContextHolder.getContext().setAuthentication(auth);
         filterChain.doFilter(request, response);
     }
 
