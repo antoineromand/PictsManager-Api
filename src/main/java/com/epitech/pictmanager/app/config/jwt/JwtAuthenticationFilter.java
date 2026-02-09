@@ -29,7 +29,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         String token = getTokenFromHeader(request);
         if (token == null || !jwtTokenProvider.validateToken(token)) {
-            filterChain.doFilter(request, response);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("Unauthorized");
             return;
         }
         String id = jwtTokenProvider.getIdFromToken(token);
