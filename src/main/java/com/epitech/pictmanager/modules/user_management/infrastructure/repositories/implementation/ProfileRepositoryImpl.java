@@ -17,7 +17,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -25,32 +24,22 @@ public class ProfileRepositoryImpl implements ProfileRepositoryPort {
     @PersistenceContext
     private EntityManager em;
 
-    private final UserLookUpRepositoryPort userLookUpRepositoryPort;
     private final ProfileJpaRepository jpaRepository;
     public ProfileRepositoryImpl(UserLookUpRepositoryPort userLookUpRepositoryPort, ProfileJpaRepository jpaRepository) {
-        this.userLookUpRepositoryPort = userLookUpRepositoryPort;
         this.jpaRepository = jpaRepository;
     }
     @Override
-    public void createProfile(UserProfileDomain domain) {
-        Long id = this.userLookUpRepositoryPort.getUserIdWithPublicId(domain.getPublicId());
+    public void createProfile(Long id, UserProfileDomain domain) {
         UserProfile userProfile = UserProfile.toEntity(domain, id);
         this.jpaRepository.save(userProfile);
     }
 
     @Override
-    public UserProfileDomain updateUserProfile(UserProfileDomain userProfile) {
-        Long id = this.userLookUpRepositoryPort.getUserIdWithPublicId(userProfile.getPublicId());
+    public UserProfileDomain updateUserProfile(Long id, UserProfileDomain userProfile) {
         UserProfile profile = this.jpaRepository.findById(id).orElseThrow(ProfileNotFoundException::new);
-        if (!Objects.equals(userProfile.getDescription(), profile.getDescription())) {
-            profile.setDescription(userProfile.getDescription());
-        }
-        if (!Objects.equals(userProfile.getPicture(), profile.getProfilePicture())) {
-            profile.setProfilePicture(userProfile.getPicture());
-        }
-        if (!Objects.equals(userProfile.getCoverPicture(), profile.getCoverPicture())) {
-            profile.setCoverPicture(userProfile.getCoverPicture());
-        }
+        profile.setCoverPicture(userProfile.getCoverPicture());
+        profile.setDescription(userProfile.getDescription());
+        profile.setProfilePicture(userProfile.getPicture());
         UserProfile updatedProfile = this.jpaRepository.save(profile);
 
         return updatedProfile.toDomain(userProfile.getPublicId());

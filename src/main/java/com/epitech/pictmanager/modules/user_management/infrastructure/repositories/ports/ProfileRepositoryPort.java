@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProfileRepositoryPort {
-    void createProfile(UserProfileDomain profil);
+    void createProfile(Long id, UserProfileDomain profil);
     Optional<UserProfileReadModel> getUserAndProfilWithPublicId(String publicId);
     List<UserProfileSearchReadModel> getUsersAndProfilsWithSearchInput(String searchInput, int limit, int offset);
     int getTotalFromSearch(String searchInput);
     Optional<UserPublicProfileReadModel> getUserPublicProfilWithUsername(String username);
 
-    UserProfileDomain updateUserProfile(UserProfileDomain userProfile);
+    UserProfileDomain updateUserProfile(Long id, UserProfileDomain userProfile);
 }
 

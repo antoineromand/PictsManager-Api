@@ -31,6 +31,7 @@ public class UserManagementController {
 
     @PutMapping("/me/profile")
     public GenericResponse<UpdateProfilResponseDTO> updateProfil(@AuthenticationPrincipal String id, @RequestBody() UpdateProfilRequestDto dto) {
+
         return new GenericResponse<>(
                 "Profile updated succesfully.",
                 HttpStatus.OK.value(),

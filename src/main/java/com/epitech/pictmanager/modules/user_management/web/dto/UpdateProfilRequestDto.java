@@ -12,10 +12,10 @@ public class UpdateProfilRequestDto {
     private String profilePicture;
     private String coverPicture;
 
-    public UpdateProfilRequestDto() {
-    }
-
-    public UpdateProfilRequestDto(String description, String profilePicture, String coverPicture) {
+    public UpdateProfilRequestDto(String coverPicture, String description, String picture) {
+        this.coverPicture = coverPicture;
+        this.description = description;
+        this.profilePicture = picture;
     }
 
     public UserProfileDomain toDomain(String publicId) {
