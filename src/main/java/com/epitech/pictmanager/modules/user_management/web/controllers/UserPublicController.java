@@ -1,26 +1,21 @@
 package com.epitech.pictmanager.modules.user_management.web.controllers;
 
-import com.epitech.pictmanager.modules.user_management.application.services.UserPublicService;
 import com.epitech.pictmanager.modules.user_management.application.usecases.search.GetUserFromSearchUseCase;
 import com.epitech.pictmanager.modules.user_management.application.usecases.search.GetUsersFromSearchUseCase;
 import com.epitech.pictmanager.modules.user_management.web.dto.response.SearchListResponseDTO;
 import com.epitech.pictmanager.modules.user_management.web.dto.view.UserProfileDetailView;
 import com.epitech.pictmanager.shared.responses.GenericResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
-// Make route private ..
-@RequestMapping("public/api/user")
+@RequestMapping("private/api/user")
 public class UserPublicController {
 
-    UserPublicService userPublicService;
     final GetUsersFromSearchUseCase getUsersUseCase;
     final GetUserFromSearchUseCase getUserUseCase;
 
-    public UserPublicController(UserPublicService userPublicService, GetUsersFromSearchUseCase getUsersUseCase, GetUserFromSearchUseCase getUserUseCase) {
-        this.userPublicService = userPublicService;
+    public UserPublicController(GetUsersFromSearchUseCase getUsersUseCase, GetUserFromSearchUseCase getUserUseCase) {
         this.getUsersUseCase = getUsersUseCase;
         this.getUserUseCase = getUserUseCase;
     }

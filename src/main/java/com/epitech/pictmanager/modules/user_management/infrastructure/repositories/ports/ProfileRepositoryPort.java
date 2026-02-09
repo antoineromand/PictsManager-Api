@@ -14,5 +14,7 @@ public interface ProfileRepositoryPort {
     List<UserProfileSearchReadModel> getUsersAndProfilsWithSearchInput(String searchInput, int limit, int offset);
     int getTotalFromSearch(String searchInput);
     Optional<UserPublicProfileReadModel> getUserPublicProfilWithUsername(String username);
+
+    UserProfileDomain updateUserProfile(UserProfileDomain userProfile);
 }
 

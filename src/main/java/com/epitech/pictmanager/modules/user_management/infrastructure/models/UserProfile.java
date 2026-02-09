@@ -48,4 +48,13 @@ public class UserProfile {
                 userId
         );
     }
+
+    public UserProfileDomain toDomain(String publicId) {
+        return new UserProfileDomain(
+                publicId,
+                description,
+                coverPicture,
+                profilePicture
+        );
+    }
 }
