@@ -26,7 +26,7 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - ./image_manager:/api/image_manager
+      - ./media_management:/api/media_management
 
   api:
     container_name: api
