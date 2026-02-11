@@ -65,12 +65,12 @@ CREATE TABLE IF NOT EXISTS likes
     PRIMARY KEY (user_id, post_id)
 ) engine = innodb;
 
-CREATE TABLE IF NOT EXISTS comment
+CREATE TABLE IF NOT EXISTS comments
 (
     id         BIGINT    NOT NULL auto_increment PRIMARY KEY,
     user_id    BIGINT    NOT NULL references users (id),
     post_id    BIGINT    NOT NULL REFERENCES posts (id),
-    parent_id  BIGINT REFERENCES comment (id),
+    parent_id BIGINT REFERENCES comments (id),
     content    TEXT      NOT NULL,
     created_at TIMESTAMP NOT NULL
 )
