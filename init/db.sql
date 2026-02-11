@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS media
     user_id      BIGINT      NOT NULL references users (id),
     original_key TEXT        NOT NULL,
     mime_type    VARCHAR(50) NOT NULL,
+    status enum ('UPLOADING', 'READY') NOT NULL,
     width        INT         NOT NULL,
     height       INT         NOT NULL,
     created_at   TIMESTAMP   NOT NULL
