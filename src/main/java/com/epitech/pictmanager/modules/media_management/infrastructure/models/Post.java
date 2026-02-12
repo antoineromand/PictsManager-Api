@@ -1,4 +1,4 @@
-package com.epitech.pictmanager.modules.media_management.infrastructure.model;
+package com.epitech.pictmanager.modules.media_management.infrastructure.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;

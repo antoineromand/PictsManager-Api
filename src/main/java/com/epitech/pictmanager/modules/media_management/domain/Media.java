@@ -2,12 +2,11 @@ package com.epitech.pictmanager.modules.media_management.domain;
 
 import java.time.Instant;
 import java.util.Objects;
-import java.util.UUID;
 
 
 public class Media {
 
-    private final UUID id;
+    private final String id;
     private final Long userId;
 
     private final String originalKey;
@@ -20,7 +19,7 @@ public class Media {
 
     private final Instant createdAt;
 
-    private Media(UUID id,
+    private Media(String id,
                   Long userId,
                   String originalKey,
                   String mimeType,
@@ -39,7 +38,7 @@ public class Media {
         this.createdAt = Objects.requireNonNull(createdAt);
     }
 
-    public static Media initUpload(UUID id, Long userId, String originalKey, String mimeType, Instant now) {
+    public static Media initUpload(String id, Long userId, String originalKey, String mimeType, Instant now) {
         if (originalKey.isBlank()) throw new IllegalArgumentException("originalKey required");
         if (mimeType.isBlank()) throw new IllegalArgumentException("mimeType required");
         return new Media(id, userId, originalKey, mimeType, MediaStatus.UPLOADING, null, null, now);
@@ -68,7 +67,7 @@ public class Media {
         return status == MediaStatus.READY;
     }
 
-    public UUID id() {
+    public String id() {
         return id;
     }
 

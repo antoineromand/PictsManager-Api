@@ -1,4 +1,4 @@
-package com.epitech.pictmanager.modules.media_management.infrastructure.model;
+package com.epitech.pictmanager.modules.media_management.infrastructure.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 @Table(name = "media")
 @Setter
 @Getter
-public class Media {
+
+public class MediaEntity {
     @Id
     private String id;
 
@@ -22,22 +23,29 @@ public class Media {
     private Long userId;
 
     @Column(name = "original_key", nullable = false)
-    private Long originalKey;
+    private String originalKey;
 
     @Column(name = "mime_type", length = 50, nullable = false)
     private String mimeType;
 
     @Column(name = "width", nullable = false)
-    private String width;
+    private Long width;
 
     @Column(name = "height", nullable = false)
-    private String height;
+    private Long height;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
-    public Media(String id, Long userId, Long originalKey, String mimeType, String width, String height, LocalDateTime createdAt) {
+    @Column(name = "status", nullable = false)
+    private String status;
+
+
+    public MediaEntity() {
+    }
+
+    public MediaEntity(String id, Long userId, String originalKey, String mimeType, Long width, Long height, LocalDateTime createdAt) {
         this.id = id;
         this.userId = userId;
         this.originalKey = originalKey;
@@ -45,9 +53,6 @@ public class Media {
         this.width = width;
         this.height = height;
         this.createdAt = createdAt;
-    }
-
-    public Media() {
     }
 
 }

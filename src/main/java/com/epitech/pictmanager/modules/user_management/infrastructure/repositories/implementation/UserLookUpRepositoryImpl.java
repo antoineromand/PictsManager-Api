@@ -1,6 +1,6 @@
 package com.epitech.pictmanager.modules.user_management.infrastructure.repositories.implementation;
 
-import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.ports.UserLookUpRepositoryPort;
+import com.epitech.pictmanager.shared.contracts.repositories.UserLookUpRepositoryPort;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;

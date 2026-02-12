@@ -2,8 +2,8 @@ package com.epitech.pictmanager.modules.user_management.application.usecases.pro
 
 import com.epitech.pictmanager.modules.user_management.domain.UserProfileDomain;
 import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.ports.ProfileRepositoryPort;
-import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.ports.UserLookUpRepositoryPort;
 import com.epitech.pictmanager.shared.contracts.command.CreateProfileCommand;
+import com.epitech.pictmanager.shared.contracts.repositories.UserLookUpRepositoryPort;
 import com.epitech.pictmanager.shared.contracts.usecases.CreateProfileUseCasePort;
 import org.springframework.stereotype.Component;
 

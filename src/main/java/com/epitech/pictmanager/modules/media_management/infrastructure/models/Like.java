@@ -1,6 +1,6 @@
-package com.epitech.pictmanager.modules.media_management.infrastructure.model;
+package com.epitech.pictmanager.modules.media_management.infrastructure.models;
 
-import com.epitech.pictmanager.modules.media_management.infrastructure.model.embedded.LikeId;
+import com.epitech.pictmanager.modules.media_management.infrastructure.models.embedded.LikeId;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
