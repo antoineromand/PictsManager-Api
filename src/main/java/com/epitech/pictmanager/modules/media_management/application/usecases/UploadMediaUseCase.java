@@ -27,10 +27,10 @@ public class UploadMediaUseCase {
     }
 
     public List<UploadedMediasResponseDto> execute(UploadMediaCommand command) {
-        Long userId = this.userLookUpRepositoryPort.getUserIdWithPublicId(command.publicId());
         if (Objects.isNull(command.files()) || command.files().isEmpty()) {
             throw new IllegalArgumentException("At least one file must be provided");
         }
+        Long userId = this.userLookUpRepositoryPort.getUserIdWithPublicId(command.publicId());
         var responses = new ArrayList<UploadedMediasResponseDto>();
         command.files().forEach(file -> {
             String uuid = UUID.randomUUID().toString();
