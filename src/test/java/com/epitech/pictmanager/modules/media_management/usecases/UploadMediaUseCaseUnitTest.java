@@ -3,11 +3,12 @@ package com.epitech.pictmanager.modules.media_management.usecases;
 import com.epitech.pictmanager.modules.media_management.application.command.UploadMediaCommand;
 import com.epitech.pictmanager.modules.media_management.application.services.MediaDimension;
 import com.epitech.pictmanager.modules.media_management.application.services.port.MediaServicePort;
+import com.epitech.pictmanager.modules.media_management.application.services.port.MediaStoragePort;
 import com.epitech.pictmanager.modules.media_management.application.usecases.UploadMediaUseCase;
 import com.epitech.pictmanager.modules.media_management.domain.Media;
 import com.epitech.pictmanager.modules.media_management.domain.MediaStatus;
 import com.epitech.pictmanager.modules.media_management.infrastructure.repositories.port.MediaRepositoryPort;
-import com.epitech.pictmanager.modules.media_management.web.dto.UploadedMediasResponseDto;
+import com.epitech.pictmanager.modules.media_management.web.dto.UploadMediaResponseDto;
 import com.epitech.pictmanager.shared.contracts.repositories.UserLookUpRepositoryPort;
 import jakarta.persistence.NoResultException;
 import org.junit.jupiter.api.Assertions;
@@ -34,6 +35,8 @@ public class UploadMediaUseCaseUnitTest {
     private MediaServicePort mediaServicePort;
     @Mock
     private UserLookUpRepositoryPort userLookUpRepositoryPort;
+    @Mock
+    private MediaStoragePort mediaStoragePort;
 
     @InjectMocks
     private UploadMediaUseCase uploadMediaUseCase;
@@ -82,10 +85,10 @@ public class UploadMediaUseCaseUnitTest {
 
         ArgumentCaptor<Media> mediaCaptor = ArgumentCaptor.forClass(Media.class);
 
-        List<UploadedMediasResponseDto> result = uploadMediaUseCase.execute(command);
+        List<UploadMediaResponseDto> result = uploadMediaUseCase.execute(command);
 
         assertEquals(1, result.size());
-        UploadedMediasResponseDto dto = result.getFirst();
+        UploadMediaResponseDto dto = result.getFirst();
         assertEquals(MediaStatus.READY.name(), dto.status());
         assertNull(dto.error());
         assertNotNull(dto.mediaId());
@@ -102,7 +105,7 @@ public class UploadMediaUseCaseUnitTest {
         assertTrue(mediaAtFirstSave.originalKey().contains("/original"));
         assertTrue(mediaAtFirstSave.originalKey().endsWith(".jpg"));
 
-        verify(mediaServicePort).upload(file, mediaAtFirstSave.originalKey());
+        verify(mediaStoragePort).upload(file, mediaAtFirstSave.originalKey());
         verify(mediaServicePort).extractDimensions(file);
 
         verifyNoMoreInteractions(mediaServicePort);

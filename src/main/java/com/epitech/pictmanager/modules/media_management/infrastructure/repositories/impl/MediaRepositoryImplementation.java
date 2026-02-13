@@ -29,9 +29,10 @@ public class MediaRepositoryImplementation implements MediaRepositoryPort {
                 media.userId(),
                 media.originalKey(),
                 media.mimeType(),
-                media.width().longValue(),
-                media.height().longValue(),
-                Objects.isNull(media.createdAt()) ? LocalDateTime.ofInstant(media.createdAt(), ZoneOffset.UTC) : null
+                Objects.isNull(media.width()) ? null : media.width().longValue(),
+                Objects.isNull(media.height()) ? null : media.height().longValue(),
+                Objects.isNull(media.createdAt()) ? null : LocalDateTime.ofInstant(media.createdAt(), ZoneOffset.UTC),
+                media.status().name()
         );
     }
 }

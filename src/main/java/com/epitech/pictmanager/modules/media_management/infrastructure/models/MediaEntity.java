@@ -28,10 +28,10 @@ public class MediaEntity {
     @Column(name = "mime_type", length = 50, nullable = false)
     private String mimeType;
 
-    @Column(name = "width", nullable = false)
+    @Column(name = "width", nullable = true)
     private Long width;
 
-    @Column(name = "height", nullable = false)
+    @Column(name = "height", nullable = true)
     private Long height;
 
     @CreationTimestamp
@@ -45,7 +45,7 @@ public class MediaEntity {
     public MediaEntity() {
     }
 
-    public MediaEntity(String id, Long userId, String originalKey, String mimeType, Long width, Long height, LocalDateTime createdAt) {
+    public MediaEntity(String id, Long userId, String originalKey, String mimeType, Long width, Long height, LocalDateTime createdAt, String status) {
         this.id = id;
         this.userId = userId;
         this.originalKey = originalKey;
@@ -53,6 +53,7 @@ public class MediaEntity {
         this.width = width;
         this.height = height;
         this.createdAt = createdAt;
+        this.status = status;
     }
 
 }
