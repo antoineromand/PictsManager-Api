@@ -8,12 +8,15 @@ import com.epitech.pictmanager.modules.media_management.infrastructure.repositor
 import com.epitech.pictmanager.modules.media_management.web.dto.UploadMediaResponseDto;
 import com.epitech.pictmanager.shared.contracts.repositories.UserLookUpRepositoryPort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 public class UploadMediaUseCase {
@@ -32,34 +35,49 @@ public class UploadMediaUseCase {
             throw new IllegalArgumentException("At least one file must be provided");
         }
         Long userId = this.userLookUpRepositoryPort.getUserIdWithPublicId(command.publicId());
-        var responses = new ArrayList<UploadMediaResponseDto>();
-        command.files().forEach(file -> {
-            String uuid = UUID.randomUUID().toString();
-            String filename = Objects.requireNonNull(file.getOriginalFilename());
-            int dot = filename.lastIndexOf('.');
-            String extension = (dot >= 0) ? filename.substring(dot) : "";
 
-            String key = "uploads/" + uuid + "/original" + extension;
-            Media media = Media.initUpload(
-                    uuid,
-                    userId,
-                    key,
-                    Objects.requireNonNull(file.getContentType()),
-                    Instant.now()
-            );
+        int parallelism = 3;
+        ExecutorService pool = Executors.newFixedThreadPool(parallelism);
+
+        try {
+            List<CompletableFuture<UploadMediaResponseDto>> futures =
+                    command.files().
+                            stream().map(file -> CompletableFuture
+                                    .supplyAsync(() -> this.uploadMedia(file, userId), pool))
+                            .toList();
+
+            return futures.stream().map(CompletableFuture::join).toList();
+        } finally {
+            pool.shutdown();
+        }
+
+    }
+
+    private UploadMediaResponseDto uploadMedia(MultipartFile file, Long userId) {
+        String uuid = UUID.randomUUID().toString();
+        String filename = Objects.requireNonNull(file.getOriginalFilename());
+        int dot = filename.lastIndexOf('.');
+        String extension = (dot >= 0) ? filename.substring(dot) : "";
+
+        String key = "uploads/" + uuid + "/original" + extension;
+        Media media = Media.initUpload(
+                uuid,
+                userId,
+                key,
+                Objects.requireNonNull(file.getContentType()),
+                Instant.now()
+        );
+        this.mediaRepositoryPort.save(media);
+        try {
+            var prepared = mediaServicePort.prepare(file);
+            this.mediaServicePort.addToStorage(prepared.bytes(), prepared.contentType(), media.originalKey());
+            media.markReady(prepared.dimension().width(), prepared.dimension().height());
             this.mediaRepositoryPort.save(media);
-            try {
-                var prepared = mediaServicePort.prepare(file);
-                this.mediaServicePort.addToStorage(prepared.bytes(), prepared.contentType(), media.originalKey());
-                media.markReady(prepared.dimension().width(), prepared.dimension().height());
-                this.mediaRepositoryPort.save(media);
-                responses.add(new UploadMediaResponseDto(media.id(), MediaStatus.READY.name(), null));
-            } catch (Exception e) {
-                media.markFailed();
-                this.mediaRepositoryPort.save(media);
-                responses.add(new UploadMediaResponseDto(media.id(), MediaStatus.FAILED.name(), "Failed to upload media"));
-            }
-        });
-        return responses;
+            return new UploadMediaResponseDto(media.id(), MediaStatus.READY.name(), null);
+        } catch (Exception e) {
+            media.markFailed();
+            this.mediaRepositoryPort.save(media);
+            return new UploadMediaResponseDto(media.id(), MediaStatus.FAILED.name(), "Failed to upload media");
+        }
     }
 }
