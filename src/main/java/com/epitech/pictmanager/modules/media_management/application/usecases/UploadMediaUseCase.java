@@ -1,7 +1,6 @@
 package com.epitech.pictmanager.modules.media_management.application.usecases;
 
 import com.epitech.pictmanager.modules.media_management.application.command.UploadMediaCommand;
-import com.epitech.pictmanager.modules.media_management.application.services.MediaDimension;
 import com.epitech.pictmanager.modules.media_management.application.services.port.MediaServicePort;
 import com.epitech.pictmanager.modules.media_management.domain.Media;
 import com.epitech.pictmanager.modules.media_management.domain.MediaStatus;
@@ -50,9 +49,9 @@ public class UploadMediaUseCase {
             );
             this.mediaRepositoryPort.save(media);
             try {
-                MediaDimension dimension = this.mediaServicePort.extractDimensions(file);
-                this.mediaServicePort.addToStorage(file, media.originalKey());
-                media.markReady(dimension.width(), dimension.height());
+                var prepared = mediaServicePort.prepare(file);
+                this.mediaServicePort.addToStorage(prepared.bytes(), prepared.contentType(), media.originalKey());
+                media.markReady(prepared.dimension().width(), prepared.dimension().height());
                 this.mediaRepositoryPort.save(media);
                 responses.add(new UploadMediaResponseDto(media.id(), MediaStatus.READY.name(), null));
             } catch (Exception e) {

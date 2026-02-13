@@ -1,10 +1,10 @@
 package com.epitech.pictmanager.modules.media_management.application.services.port;
 
-import com.epitech.pictmanager.modules.media_management.application.services.MediaDimension;
+import com.epitech.pictmanager.modules.media_management.application.services.PreparedMedia;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface MediaServicePort {
-    MediaDimension extractDimensions(MultipartFile file);
+    PreparedMedia prepare(MultipartFile file);
 
-    void addToStorage(MultipartFile file, String key);
+    void addToStorage(byte[] bytes, String contentType, String key);
 }
