@@ -1,5 +1,6 @@
 package com.epitech.pictmanager.modules.media_management.infrastructure.repositories.impl;
 
+import com.epitech.pictmanager.modules.media_management.application.read.MediaListReadModel;
 import com.epitech.pictmanager.modules.media_management.application.read.MediaRowReadModel;
 import com.epitech.pictmanager.modules.media_management.infrastructure.models.MediaEntity;
 import com.epitech.pictmanager.modules.media_management.infrastructure.repositories.MediaReadRepositoryPort;
@@ -20,11 +21,13 @@ public class MediaReadRepositoryImplementation implements MediaReadRepositoryPor
     }
 
     @Override
-    public List<MediaRowReadModel> getUserMediaList(Long userId, Pageable pageable) {
+    public MediaListReadModel getUserMediaList(Long userId, Pageable pageable) {
         Page<MediaEntity> mediaEntities = mediaJpaRepository.findMediaEntitiesByUserId(userId, pageable);
-        return mediaEntities.stream().map(entity -> new MediaRowReadModel(
+        List<MediaRowReadModel> rows = mediaEntities.stream().map(entity -> new MediaRowReadModel(
                 entity.getId(),
                 entity.getOriginalKey()
         )).toList();
+
+        return new MediaListReadModel(mediaEntities.getTotalElements(), rows);
     }
 }

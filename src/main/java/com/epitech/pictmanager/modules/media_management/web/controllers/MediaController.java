@@ -1,7 +1,7 @@
 package com.epitech.pictmanager.modules.media_management.web.controllers;
 
 import com.epitech.pictmanager.modules.media_management.application.command.UploadMediaCommand;
-import com.epitech.pictmanager.modules.media_management.application.read.MediaRowReadModel;
+import com.epitech.pictmanager.modules.media_management.application.read.MediaListReadModel;
 import com.epitech.pictmanager.modules.media_management.application.usecases.GetMediaListUseCase;
 import com.epitech.pictmanager.modules.media_management.application.usecases.UploadMediaUseCase;
 import com.epitech.pictmanager.modules.media_management.web.dto.UploadMediaRequestDto;
@@ -26,15 +26,15 @@ public class MediaController {
     }
 
     @GetMapping("/list")
-    public GenericResponse<List<MediaRowReadModel>> list(
+    public GenericResponse<MediaListReadModel> list(
             @AuthenticationPrincipal String publicId,
-            @RequestParam(name = "offset", defaultValue = "0") int offset,
-            @RequestParam(name = "limit", defaultValue = "5") int limit
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "perPage", defaultValue = "5") int perPage
     ) {
         return new GenericResponse<>(
                 null,
                 HttpStatus.OK.value(),
-                this.getMediaListUseCase.getUserMediaList(publicId, offset, limit)
+                this.getMediaListUseCase.getUserMediaList(publicId, page, perPage)
         );
     }
 

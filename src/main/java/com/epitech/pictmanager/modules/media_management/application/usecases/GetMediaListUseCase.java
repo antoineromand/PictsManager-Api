@@ -1,14 +1,12 @@
 package com.epitech.pictmanager.modules.media_management.application.usecases;
 
-import com.epitech.pictmanager.modules.media_management.application.read.MediaRowReadModel;
+import com.epitech.pictmanager.modules.media_management.application.read.MediaListReadModel;
 import com.epitech.pictmanager.modules.media_management.infrastructure.repositories.MediaReadRepositoryPort;
 import com.epitech.pictmanager.shared.contracts.repositories.UserLookUpRepositoryPort;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class GetMediaListUseCase {
@@ -20,7 +18,7 @@ public class GetMediaListUseCase {
         this.userLookUpRepository = userLookUpRepository;
     }
 
-    public List<MediaRowReadModel> getUserMediaList(String publicId, int pageNumber, int pageSize) {
+    public MediaListReadModel getUserMediaList(String publicId, int pageNumber, int pageSize) {
         Long userId = this.userLookUpRepository.getUserIdWithPublicId(publicId);
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "createdAt"));
 
