@@ -22,21 +22,57 @@ CREATE TABLE IF NOT EXISTS user_profile
     profile_picture VARCHAR(512) NULL,
     cover_picture   VARCHAR(512) NULL,
     user_id        BIGINT NOT NULL UNIQUE,
-    CONSTRAINT fk_userprofil_user FOREIGN KEY (user_id) REFERENCES users(id) ON
-        DELETE CASCADE
+    CONSTRAINT fk_userprofil_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 )
     engine=innodb;
 
-CREATE TABLE IF NOT EXISTS images
+CREATE TABLE IF NOT EXISTS media
 (
-    id          BIGINT NOT NULL auto_increment PRIMARY KEY,
-    description VARCHAR(100) NULL,
-    name        VARCHAR(255) NULL,
-    path        VARCHAR(512) NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    user_id     BIGINT NOT NULL,
-    INDEX idx_images_user_id (user_id),
-    CONSTRAINT fk_images_user FOREIGN KEY (user_id) REFERENCES users(id) ON
-        DELETE CASCADE
+    id           CHAR(36)    NOT NULL PRIMARY KEY,
+    user_id      BIGINT      NOT NULL references users (id),
+    original_key TEXT        NOT NULL,
+    mime_type    VARCHAR(50) NOT NULL,
+    status enum ('UPLOADING', 'READY', 'FAILED') NOT NULL,
+    width  INT                                   NULL,
+    height INT                                   NULL,
+    created_at   TIMESTAMP   NOT NULL
 )
     engine=innodb;
+
+CREATE TABLE IF NOT EXISTS posts
+(
+    id         BIGINT    NOT NULL auto_increment PRIMARY KEY,
+    user_id    BIGINT    NOT NULL references users (id),
+    caption    TEXT      NOT NULL,
+    created_at TIMESTAMP NOT NULL
+)
+    engine = innodb;
+
+CREATE TABLE IF NOT EXISTS post_media
+(
+    post_id  BIGINT NOT NULL REFERENCES posts (id) ON DELETE CASCADE,
+    media_id BIGINT NOT NULL REFERENCES media (id),
+    position INT    NOT NULL,
+    PRIMARY KEY (post_id, media_id)
+)
+    engine = innodb;
+
+CREATE TABLE IF NOT EXISTS likes
+(
+    user_id    BIGINT    NOT NULL REFERENCES users (id),
+    post_id    BIGINT    NOT NULL REFERENCES posts (id),
+    created_at TIMESTAMP NOT NULL,
+
+    PRIMARY KEY (user_id, post_id)
+) engine = innodb;
+
+CREATE TABLE IF NOT EXISTS comments
+(
+    id         BIGINT    NOT NULL auto_increment PRIMARY KEY,
+    user_id    BIGINT    NOT NULL references users (id),
+    post_id    BIGINT    NOT NULL REFERENCES posts (id),
+    parent_id BIGINT REFERENCES comments (id),
+    content    TEXT      NOT NULL,
+    created_at TIMESTAMP NOT NULL
+)
+    engine = innodb;
