@@ -1,4 +1,4 @@
-package com.epitech.pictmanager.modules.media_management.infrastructure.repositories.port;
+package com.epitech.pictmanager.modules.media_management.domain.port;
 
 import com.epitech.pictmanager.modules.media_management.domain.Media;
 

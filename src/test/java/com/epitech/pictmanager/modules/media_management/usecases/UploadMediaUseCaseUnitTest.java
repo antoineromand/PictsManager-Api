@@ -7,7 +7,7 @@ import com.epitech.pictmanager.modules.media_management.application.services.por
 import com.epitech.pictmanager.modules.media_management.application.usecases.UploadMediaUseCase;
 import com.epitech.pictmanager.modules.media_management.domain.Media;
 import com.epitech.pictmanager.modules.media_management.domain.MediaStatus;
-import com.epitech.pictmanager.modules.media_management.infrastructure.repositories.port.MediaRepositoryPort;
+import com.epitech.pictmanager.modules.media_management.domain.port.MediaRepositoryPort;
 import com.epitech.pictmanager.modules.media_management.web.dto.UploadMediaResponseDto;
 import com.epitech.pictmanager.shared.contracts.repositories.UserLookUpRepositoryPort;
 import jakarta.persistence.NoResultException;
