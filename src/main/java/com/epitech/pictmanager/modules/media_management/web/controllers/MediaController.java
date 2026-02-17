@@ -1,16 +1,16 @@
 package com.epitech.pictmanager.modules.media_management.web.controllers;
 
 import com.epitech.pictmanager.modules.media_management.application.command.UploadMediaCommand;
+import com.epitech.pictmanager.modules.media_management.application.read.MediaListReadModel;
+import com.epitech.pictmanager.modules.media_management.application.usecases.GetMediaListUseCase;
 import com.epitech.pictmanager.modules.media_management.application.usecases.UploadMediaUseCase;
 import com.epitech.pictmanager.modules.media_management.web.dto.UploadMediaRequestDto;
 import com.epitech.pictmanager.modules.media_management.web.dto.UploadMediaResponseDto;
 import com.epitech.pictmanager.shared.responses.GenericResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,9 +18,24 @@ import java.util.List;
 @RequestMapping("private/api/media")
 public class MediaController {
     private final UploadMediaUseCase uploadMediaUseCase;
+    private final GetMediaListUseCase getMediaListUseCase;
 
-    public MediaController(UploadMediaUseCase uploadMediaUseCase) {
+    public MediaController(UploadMediaUseCase uploadMediaUseCase, GetMediaListUseCase getMediaListUseCase) {
         this.uploadMediaUseCase = uploadMediaUseCase;
+        this.getMediaListUseCase = getMediaListUseCase;
+    }
+
+    @GetMapping("/list")
+    public GenericResponse<MediaListReadModel> list(
+            @AuthenticationPrincipal String publicId,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "perPage", defaultValue = "5") int perPage
+    ) {
+        return new GenericResponse<>(
+                null,
+                HttpStatus.OK.value(),
+                this.getMediaListUseCase.getUserMediaList(publicId, page, perPage)
+        );
     }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})

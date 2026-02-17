@@ -1,9 +1,9 @@
 package com.epitech.pictmanager.modules.media_management.infrastructure.repositories.impl;
 
 import com.epitech.pictmanager.modules.media_management.domain.Media;
+import com.epitech.pictmanager.modules.media_management.domain.port.MediaRepositoryPort;
 import com.epitech.pictmanager.modules.media_management.infrastructure.models.MediaEntity;
 import com.epitech.pictmanager.modules.media_management.infrastructure.repositories.jpa.MediaJpaRepository;
-import com.epitech.pictmanager.modules.media_management.infrastructure.repositories.port.MediaRepositoryPort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
