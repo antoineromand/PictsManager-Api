@@ -3,5 +3,5 @@ package com.epitech.pictmanager.modules.media_management.infrastructure.reposito
 import com.epitech.pictmanager.modules.media_management.domain.Post;
 
 public interface PostRepositoryPort {
-    Post save(Post post);
+    void save(Post post);
 }

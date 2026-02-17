@@ -8,6 +8,7 @@ import com.epitech.pictmanager.modules.media_management.domain.Post;
 import com.epitech.pictmanager.modules.media_management.infrastructure.repositories.MediaReadRepositoryPort;
 import com.epitech.pictmanager.modules.media_management.infrastructure.repositories.PostRepositoryPort;
 import com.epitech.pictmanager.shared.contracts.repositories.UserLookUpRepositoryPort;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class CreatePostUseCase {
         this.postRepositoryPort = postRepositoryPort;
     }
 
+    @Transactional
     public void execute(HandlePostCommand command) {
         Long id = this.userLookUpRepositoryPort.getUserIdWithPublicId(command.userId());
 

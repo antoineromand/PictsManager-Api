@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostMedia {
+public class PostMediaEntity {
     @EmbeddedId
     private PostMediaId postMediaId;
 

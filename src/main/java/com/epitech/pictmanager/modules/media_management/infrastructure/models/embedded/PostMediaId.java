@@ -14,8 +14,14 @@ import lombok.Setter;
 @Embeddable
 public class PostMediaId {
     @Column(name = "post_id")
-    private String postId;
+    private Long postId;
     @Column(name = "media_id")
     private String mediaId;
 
+    public static PostMediaId of(Long postId, String mediaId) {
+        PostMediaId postMediaId = new PostMediaId();
+        postMediaId.setMediaId(mediaId);
+        postMediaId.setPostId(postId);
+        return postMediaId;
+    }
 }
