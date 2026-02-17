@@ -1,0 +1,10 @@
+target/
+
+.idea/
+
+.env
+
+docker/tmp
+docker/*.env
+
+.DS_Store
