@@ -8,19 +8,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
 @RequestMapping("private/api/post")
 public class PostController {
     @PostMapping()
     public HandleRequestPostDto post(@AuthenticationPrincipal String userId, @RequestBody HandleRequestPostDto handleRequestPostDto) {
-        Map<String, Integer> medias = new HashMap<>();
-        handleRequestPostDto.postMediaDto().forEach(media -> {
-            medias.put(media.mediaId(), media.position());
-        });
-        HandlePostCommand command = new HandlePostCommand(userId, handleRequestPostDto.description(), medias);
+        HandlePostCommand command = new HandlePostCommand(userId,
+                handleRequestPostDto.caption(),
+                handleRequestPostDto.medias()
+        );
         return null;
     }
 }

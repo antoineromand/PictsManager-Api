@@ -8,7 +8,6 @@ import com.epitech.pictmanager.modules.user_management.domain.UserProfileDomain;
 import com.epitech.pictmanager.modules.user_management.infrastructure.models.UserProfile;
 import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.jpa.ProfileJpaRepository;
 import com.epitech.pictmanager.modules.user_management.infrastructure.repositories.ports.ProfileRepositoryPort;
-import com.epitech.pictmanager.shared.contracts.repositories.UserLookUpRepositoryPort;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
@@ -25,7 +24,8 @@ public class ProfileRepositoryImpl implements ProfileRepositoryPort {
     private EntityManager em;
 
     private final ProfileJpaRepository jpaRepository;
-    public ProfileRepositoryImpl(UserLookUpRepositoryPort userLookUpRepositoryPort, ProfileJpaRepository jpaRepository) {
+
+    public ProfileRepositoryImpl(ProfileJpaRepository jpaRepository) {
         this.jpaRepository = jpaRepository;
     }
     @Override

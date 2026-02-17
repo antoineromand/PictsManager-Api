@@ -1,20 +1,18 @@
 package com.epitech.pictmanager.modules.media_management.domain;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Post {
     private final Long postId;
     private final Long userId;
     private String caption;
-    private List<PostMediaLink> mediaLinks;
+    private final List<PostMediaLink> mediaLinks;
 
     public Post(Long postId, Long userId, String caption) {
         this.postId = postId;
         this.userId = userId;
         this.caption = caption;
+        this.mediaLinks = new ArrayList<>();
     }
 
     public void attach(String mediaId) {
