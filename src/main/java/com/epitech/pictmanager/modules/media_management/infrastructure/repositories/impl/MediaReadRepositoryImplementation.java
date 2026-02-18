@@ -25,9 +25,24 @@ public class MediaReadRepositoryImplementation implements MediaReadRepositoryPor
         Page<MediaEntity> mediaEntities = mediaJpaRepository.findMediaEntitiesByUserId(userId, pageable);
         List<MediaRowReadModel> rows = mediaEntities.stream().map(entity -> new MediaRowReadModel(
                 entity.getId(),
-                entity.getOriginalKey()
+                entity.getOriginalKey(),
+                entity.getUserId()
         )).toList();
 
         return new MediaListReadModel(mediaEntities.getTotalElements(), rows);
+    }
+
+    @Override
+    public List<MediaRowReadModel> getMediasById(List<String> ids) {
+        List<MediaEntity> mediaEntities = mediaJpaRepository.findAllById(ids);
+        return mediaEntities
+                .stream()
+                .map(
+                        media ->
+                                new MediaRowReadModel(
+                                        media.getId(),
+                                        media.getOriginalKey(),
+                                        media.getUserId()
+                                )).toList();
     }
 }

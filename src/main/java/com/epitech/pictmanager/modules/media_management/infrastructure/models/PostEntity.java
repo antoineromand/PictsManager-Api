@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "posts")
 @Setter
 @Getter
-public class Post {
+public class PostEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,14 +26,14 @@ public class Post {
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
-    public Post(Long id, Long userId, String caption, LocalDateTime createdAt) {
+    public PostEntity(Long id, Long userId, String caption, LocalDateTime createdAt) {
         this.id = id;
         this.userId = userId;
         this.caption = caption;
         this.createdAt = createdAt;
     }
 
-    public Post() {
+    public PostEntity() {
     }
 
 
