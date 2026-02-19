@@ -30,11 +30,13 @@ public class PostReadRepositoryImplementation implements PostReadRepositoryPort 
         String query = """
                 SELECT
                   p.id,
+                  u.username AS username,
                   p.caption,
                   p.created_at,
                   COALESCE(pm.medias, JSON_ARRAY()) AS medias,
                   COALESCE(lk.likes, 0) AS likes
                 FROM posts p
+                JOIN users u ON u.id = p.user_id
                 LEFT JOIN (
                   SELECT
                     pa.post_id,
@@ -42,12 +44,11 @@ public class PostReadRepositoryImplementation implements PostReadRepositoryPort 
                       JSON_OBJECT(
                         'mediaId', pa.media_id,
                         'key', m.original_key,
-                        'userId', p2.user_id
+                        'userId', m.user_id
                       )
                     ) AS medias
                   FROM post_media pa
                   JOIN media m ON m.id = pa.media_id
-                  JOIN posts p2 ON p2.id = pa.post_id
                   GROUP BY pa.post_id
                 ) pm ON pm.post_id = p.id
                 LEFT JOIN (
@@ -55,7 +56,8 @@ public class PostReadRepositoryImplementation implements PostReadRepositoryPort 
                   FROM likes
                   GROUP BY post_id
                 ) lk ON lk.post_id = p.id
-                WHERE p.user_id = :userId;
+                WHERE p.user_id = :userId
+                ORDER BY p.created_at DESC;
                 """;
 
         List<Object[]> rows = em.createNativeQuery(query)
@@ -65,21 +67,22 @@ public class PostReadRepositoryImplementation implements PostReadRepositoryPort 
         return rows.stream().map(
                 row -> {
                     Long postId = ((Number) row[0]).longValue();
-                    String caption = (String) row[1];
+                    String author = (String) row[1];
+                    String caption = (String) row[2];
                     LocalDateTime createdAt = null;
-                    Object createdObj = row[2];
+                    Object createdObj = row[3];
                     if (createdObj instanceof Timestamp ts) {
                         createdAt = ts.toLocalDateTime();
                     } else if (createdObj instanceof LocalDateTime ldt) {
                         createdAt = ldt;
                     }
 
-                    String mediasJson = row[3] != null ? row[3].toString() : "[]";
+                    String mediasJson = row[4] != null ? row[4].toString() : "[]";
                     List<MediaRowReadModel> medias = parseMedias(mediasJson);
 
-                    int likes = row[4] == null ? 0 : ((Number) row[4]).intValue();
+                    int likes = row[5] == null ? 0 : ((Number) row[5]).intValue();
 
-                    return new PostRowReadModel(postId, caption, medias, likes, createdAt);
+                    return new PostRowReadModel(postId, author, caption, medias, likes, createdAt);
                 }
         ).toList();
     }
