@@ -34,9 +34,11 @@ public class PostReadRepositoryImplementation implements PostReadRepositoryPort 
                   p.caption,
                   p.created_at,
                   COALESCE(pm.medias, JSON_ARRAY()) AS medias,
-                  COALESCE(lk.likes, 0) AS likes
+                  COALESCE(lk.likes, 0) AS likes,
+                  up.profile_picture AS profiePicture
                 FROM posts p
                 JOIN users u ON u.id = p.user_id
+                JOIN user_profile up ON up.user_id = u.id
                 LEFT JOIN (
                   SELECT
                     pa.post_id,
@@ -82,7 +84,9 @@ public class PostReadRepositoryImplementation implements PostReadRepositoryPort 
 
                     int likes = row[5] == null ? 0 : ((Number) row[5]).intValue();
 
-                    return new PostRowReadModel(postId, author, caption, medias, likes, createdAt);
+                    String profilePicture = (String) row[6];
+
+                    return new PostRowReadModel(postId, author, profilePicture, caption, medias, likes, createdAt);
                 }
         ).toList();
     }
