@@ -6,5 +6,7 @@ import java.util.List;
 public record PostRowReadModel(Long id, String author, String authorProfilePicture, String caption,
                                List<MediaRowReadModel> mediaRowReadModels,
                                int likes,
-                               LocalDateTime created_at) {
+                               LocalDateTime created_at,
+                               boolean isLikedByUser
+) {
 }
