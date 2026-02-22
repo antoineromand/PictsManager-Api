@@ -2,6 +2,7 @@ package com.epitech.pictmanager.modules.media_management.web.controllers;
 
 import com.epitech.pictmanager.modules.media_management.application.exceptions.MediaNotFoundException;
 import com.epitech.pictmanager.modules.media_management.application.exceptions.MediaPermissionException;
+import com.epitech.pictmanager.modules.media_management.application.exceptions.PostNotFoundException;
 import com.epitech.pictmanager.shared.responses.ApiError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,11 @@ public class PostControllerGlobalExceptionHandler {
 
     @ExceptionHandler(MediaPermissionException.class)
     public ResponseEntity<ApiError> handleMediaPermissionException(MediaPermissionException ex, HttpServletRequest req) {
+        return new ResponseEntity<>(new ApiError(ex.getCode(), ex.getMessage(), req.getRequestURI(), Instant.now()), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(PostNotFoundException.class)
+    public ResponseEntity<ApiError> handlePostNotFoundException(PostNotFoundException ex, HttpServletRequest req) {
         return new ResponseEntity<>(new ApiError(ex.getCode(), ex.getMessage(), req.getRequestURI(), Instant.now()), HttpStatus.UNAUTHORIZED);
     }
 }

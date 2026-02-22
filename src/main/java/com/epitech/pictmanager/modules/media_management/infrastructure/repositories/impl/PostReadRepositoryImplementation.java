@@ -2,7 +2,9 @@ package com.epitech.pictmanager.modules.media_management.infrastructure.reposito
 
 import com.epitech.pictmanager.modules.media_management.application.read.MediaRowReadModel;
 import com.epitech.pictmanager.modules.media_management.application.read.PostRowReadModel;
+import com.epitech.pictmanager.modules.media_management.infrastructure.PostQuerySearch;
 import com.epitech.pictmanager.modules.media_management.infrastructure.repositories.PostReadRepositoryPort;
+import com.epitech.pictmanager.shared.enums.WhereClauseFilter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
@@ -27,43 +29,11 @@ public class PostReadRepositoryImplementation implements PostReadRepositoryPort 
 
     @Override
     public List<PostRowReadModel> getPostsByUserId(Long userId) {
-        String query = """
-                SELECT
-                  p.id,
-                  u.username AS username,
-                  p.caption,
-                  p.created_at,
-                  COALESCE(pm.medias, JSON_ARRAY()) AS medias,
-                  COALESCE(lk.likes, 0) AS likes,
-                  up.profile_picture AS profiePicture
-                FROM posts p
-                JOIN users u ON u.id = p.user_id
-                JOIN user_profile up ON up.user_id = u.id
-                LEFT JOIN (
-                  SELECT
-                    pa.post_id,
-                    JSON_ARRAYAGG(
-                      JSON_OBJECT(
-                        'mediaId', pa.media_id,
-                        'key', m.original_key,
-                        'userId', m.user_id
-                      )
-                    ) AS medias
-                  FROM post_media pa
-                  JOIN media m ON m.id = pa.media_id
-                  GROUP BY pa.post_id
-                ) pm ON pm.post_id = p.id
-                LEFT JOIN (
-                  SELECT post_id, COUNT(*) AS likes
-                  FROM likes
-                  GROUP BY post_id
-                ) lk ON lk.post_id = p.id
-                WHERE p.user_id = :userId
-                ORDER BY p.created_at DESC;
-                """;
+        String query = PostQuerySearch.build(WhereClauseFilter.WHERE_BY_OWNER);
 
         List<Object[]> rows = em.createNativeQuery(query)
                 .setParameter("userId", userId)
+                .setParameter("viewerId", userId)
                 .getResultList();
 
         return rows.stream().map(
@@ -86,7 +56,9 @@ public class PostReadRepositoryImplementation implements PostReadRepositoryPort 
 
                     String profilePicture = (String) row[6];
 
-                    return new PostRowReadModel(postId, author, profilePicture, caption, medias, likes, createdAt);
+                    boolean isLiked = (int) row[7] != 0;
+
+                    return new PostRowReadModel(postId, author, profilePicture, caption, medias, likes, createdAt, isLiked);
                 }
         ).toList();
     }
