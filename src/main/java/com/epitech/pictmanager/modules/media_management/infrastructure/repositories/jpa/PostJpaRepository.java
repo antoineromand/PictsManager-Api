@@ -3,5 +3,6 @@ package com.epitech.pictmanager.modules.media_management.infrastructure.reposito
 import com.epitech.pictmanager.modules.media_management.infrastructure.models.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PostJpaRepository extends JpaRepository<PostEntity, String> {
+public interface PostJpaRepository extends JpaRepository<PostEntity, Long> {
+
 }
