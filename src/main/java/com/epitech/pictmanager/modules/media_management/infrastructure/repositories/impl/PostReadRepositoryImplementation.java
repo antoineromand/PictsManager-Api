@@ -27,10 +27,23 @@ public class PostReadRepositoryImplementation implements PostReadRepositoryPort 
         this.objectMapper = objectMapper;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<PostRowReadModel> getPostsByUserId(Long userId) {
         String query = PostQuerySearch.build(WhereClauseFilter.WHERE_BY_OWNER);
 
+        List<Object[]> rows = em.createNativeQuery(query)
+                .setParameter("userId", userId)
+                .setParameter("viewerId", userId)
+                .getResultList();
+
+        return rows.stream().map(this::objectToReadModel).toList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<PostRowReadModel> getPublicPosts(Long userId) {
+        String query = PostQuerySearch.build(WhereClauseFilter.WHERE_PUBLIC_EXCEPT_OWNER);
         List<Object[]> rows = em.createNativeQuery(query)
                 .setParameter("userId", userId)
                 .setParameter("viewerId", userId)

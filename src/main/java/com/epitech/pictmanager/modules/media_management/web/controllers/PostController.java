@@ -2,9 +2,10 @@ package com.epitech.pictmanager.modules.media_management.web.controllers;
 
 import com.epitech.pictmanager.modules.media_management.application.command.HandlePostCommand;
 import com.epitech.pictmanager.modules.media_management.application.read.PostRowReadModel;
-import com.epitech.pictmanager.modules.media_management.application.usecases.CreatePostUseCase;
-import com.epitech.pictmanager.modules.media_management.application.usecases.GetPostFromUserUseCase;
-import com.epitech.pictmanager.modules.media_management.application.usecases.SetPostLikeUseCase;
+import com.epitech.pictmanager.modules.media_management.application.usecases.post.CreatePostUseCase;
+import com.epitech.pictmanager.modules.media_management.application.usecases.post.GetPostFromPublicUsersUseCase;
+import com.epitech.pictmanager.modules.media_management.application.usecases.post.GetPostFromUserUseCase;
+import com.epitech.pictmanager.modules.media_management.application.usecases.post.SetPostLikeUseCase;
 import com.epitech.pictmanager.modules.media_management.web.dto.HandleRequestPostDto;
 import com.epitech.pictmanager.modules.media_management.web.dto.SetLikeRequestDto;
 import com.epitech.pictmanager.shared.responses.GenericResponse;
@@ -20,11 +21,13 @@ public class PostController {
     private final CreatePostUseCase createPostUseCase;
     private final GetPostFromUserUseCase getPostFromUserUseCase;
     private final SetPostLikeUseCase setPostLikeUseCase;
+    private final GetPostFromPublicUsersUseCase getPostFromPublicUsersUseCase;
 
-    public PostController(CreatePostUseCase createPostUseCase, GetPostFromUserUseCase getPostFromUserUseCase, SetPostLikeUseCase setPostLikeUseCase) {
+    public PostController(CreatePostUseCase createPostUseCase, GetPostFromUserUseCase getPostFromUserUseCase, SetPostLikeUseCase setPostLikeUseCase, GetPostFromPublicUsersUseCase getPostFromPublicUsers) {
         this.createPostUseCase = createPostUseCase;
         this.getPostFromUserUseCase = getPostFromUserUseCase;
         this.setPostLikeUseCase = setPostLikeUseCase;
+        this.getPostFromPublicUsersUseCase = getPostFromPublicUsers;
     }
     @PostMapping()
     public GenericResponse<Void> post(@AuthenticationPrincipal String publicId, @RequestBody HandleRequestPostDto handleRequestPostDto) {
@@ -39,6 +42,12 @@ public class PostController {
     @GetMapping("/list")
     public GenericResponse<List<PostRowReadModel>> list(@AuthenticationPrincipal String publicId) {
         var response = this.getPostFromUserUseCase.execute(publicId);
+        return new GenericResponse<>(null, HttpStatus.OK.value(), response);
+    }
+
+    @GetMapping("/feed")
+    public GenericResponse<List<PostRowReadModel>> feed(@AuthenticationPrincipal String publicId) {
+        var response = this.getPostFromPublicUsersUseCase.execute(publicId);
         return new GenericResponse<>(null, HttpStatus.OK.value(), response);
     }
 

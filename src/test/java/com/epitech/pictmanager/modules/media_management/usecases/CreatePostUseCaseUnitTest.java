@@ -4,7 +4,7 @@ import com.epitech.pictmanager.modules.media_management.application.command.Hand
 import com.epitech.pictmanager.modules.media_management.application.exceptions.MediaNotFoundException;
 import com.epitech.pictmanager.modules.media_management.application.exceptions.MediaPermissionException;
 import com.epitech.pictmanager.modules.media_management.application.read.MediaRowReadModel;
-import com.epitech.pictmanager.modules.media_management.application.usecases.CreatePostUseCase;
+import com.epitech.pictmanager.modules.media_management.application.usecases.post.CreatePostUseCase;
 import com.epitech.pictmanager.modules.media_management.domain.Post;
 import com.epitech.pictmanager.modules.media_management.infrastructure.repositories.MediaReadRepositoryPort;
 import com.epitech.pictmanager.modules.media_management.infrastructure.repositories.PostRepositoryPort;

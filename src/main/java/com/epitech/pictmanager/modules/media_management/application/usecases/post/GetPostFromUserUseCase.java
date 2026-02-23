@@ -1,4 +1,4 @@
-package com.epitech.pictmanager.modules.media_management.application.usecases;
+package com.epitech.pictmanager.modules.media_management.application.usecases.post;
 
 import com.epitech.pictmanager.modules.media_management.application.read.PostRowReadModel;
 import com.epitech.pictmanager.modules.media_management.infrastructure.repositories.PostReadRepositoryPort;

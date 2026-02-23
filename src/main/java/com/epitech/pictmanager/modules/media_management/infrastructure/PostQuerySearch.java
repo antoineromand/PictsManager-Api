@@ -58,7 +58,7 @@ public final class PostQuerySearch {
 
     private static final String WHERE_PUBLIC_EXCEPT_OWNER = """
             WHERE p.user_id <> :userId
-              AND u.is_private = false
+              AND u.is_public = true
             """;
 
     private static final String WHERE_BY_USERNAME = """

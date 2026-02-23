@@ -1,4 +1,4 @@
-package com.epitech.pictmanager.modules.media_management.application.usecases;
+package com.epitech.pictmanager.modules.media_management.application.usecases.post;
 
 import com.epitech.pictmanager.modules.media_management.application.exceptions.PostNotFoundException;
 import com.epitech.pictmanager.modules.media_management.infrastructure.repositories.PostRepositoryPort;

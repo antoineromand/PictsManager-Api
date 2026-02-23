@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface PostReadRepositoryPort {
     List<PostRowReadModel> getPostsByUserId(Long userId);
+
+    List<PostRowReadModel> getPublicPosts(Long userId);
 }
