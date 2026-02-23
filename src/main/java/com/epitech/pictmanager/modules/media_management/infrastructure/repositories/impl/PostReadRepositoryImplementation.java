@@ -36,31 +36,7 @@ public class PostReadRepositoryImplementation implements PostReadRepositoryPort 
                 .setParameter("viewerId", userId)
                 .getResultList();
 
-        return rows.stream().map(
-                row -> {
-                    Long postId = ((Number) row[0]).longValue();
-                    String author = (String) row[1];
-                    String caption = (String) row[2];
-                    LocalDateTime createdAt = null;
-                    Object createdObj = row[3];
-                    if (createdObj instanceof Timestamp ts) {
-                        createdAt = ts.toLocalDateTime();
-                    } else if (createdObj instanceof LocalDateTime ldt) {
-                        createdAt = ldt;
-                    }
-
-                    String mediasJson = row[4] != null ? row[4].toString() : "[]";
-                    List<MediaRowReadModel> medias = parseMedias(mediasJson);
-
-                    int likes = row[5] == null ? 0 : ((Number) row[5]).intValue();
-
-                    String profilePicture = (String) row[6];
-
-                    boolean isLiked = (int) row[7] != 0;
-
-                    return new PostRowReadModel(postId, author, profilePicture, caption, medias, likes, createdAt, isLiked);
-                }
-        ).toList();
+        return rows.stream().map(this::objectToReadModel).toList();
     }
 
     private List<MediaRowReadModel> parseMedias(String mediasJson) {
@@ -73,6 +49,30 @@ public class PostReadRepositoryImplementation implements PostReadRepositoryPort 
         } catch (Exception e) {
             return Collections.emptyList();
         }
+    }
+
+    private PostRowReadModel objectToReadModel(Object[] row) {
+        Long postId = ((Number) row[0]).longValue();
+        String author = (String) row[1];
+        String caption = (String) row[2];
+        LocalDateTime createdAt = null;
+        Object createdObj = row[3];
+        if (createdObj instanceof Timestamp ts) {
+            createdAt = ts.toLocalDateTime();
+        } else if (createdObj instanceof LocalDateTime ldt) {
+            createdAt = ldt;
+        }
+
+        String mediasJson = row[4] != null ? row[4].toString() : "[]";
+        List<MediaRowReadModel> medias = parseMedias(mediasJson);
+
+        int likes = row[5] == null ? 0 : ((Number) row[5]).intValue();
+
+        String profilePicture = (String) row[6];
+
+        boolean isLiked = ((Number) row[7]).intValue() != 0;
+
+        return new PostRowReadModel(postId, author, profilePicture, caption, medias, likes, createdAt, isLiked);
     }
 }
 
